@@ -3,7 +3,13 @@ import type { LocaleNs } from '../types';
 export const commonNs: LocaleNs = {
   es: {
     'nav.home': 'Inicio',
+    'nav.ciencia': 'Ciencia',
+    'nav.ciencia.cosmos': 'Cosmos',
+    'nav.ciencia.vida': 'Vida marina',
+    'nav.ciencia.materia': 'Materia y energía',
     'nav.academia': 'Academia',
+    'nav.academia.plan': 'Plan de estudios',
+    'nav.metodo': 'Método',
     'nav.herramientas': 'Herramientas',
     'nav.proyectos': 'Proyectos',
     'nav.comunidad': 'Comunidad',
@@ -70,7 +76,13 @@ export const commonNs: LocaleNs = {
   },
   en: {
     'nav.home': 'Home',
+    'nav.ciencia': 'Science',
+    'nav.ciencia.cosmos': 'Cosmos',
+    'nav.ciencia.vida': 'Marine life',
+    'nav.ciencia.materia': 'Matter & energy',
     'nav.academia': 'Academy',
+    'nav.academia.plan': 'Curriculum',
+    'nav.metodo': 'Method',
     'nav.herramientas': 'Tools',
     'nav.proyectos': 'Projects',
     'nav.comunidad': 'Community',

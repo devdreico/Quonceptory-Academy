@@ -9,7 +9,9 @@ import { useLocale } from '@/i18n';
 import { Reveal } from '@/components/ui/Reveal';
 
 const NAV_LINKS = [
+  { key: 'nav.ciencia', path: 'ciencia' },
   { key: 'nav.academia', path: 'academia' },
+  { key: 'nav.metodo', path: 'metodo' },
   { key: 'nav.herramientas', path: 'herramientas' },
   { key: 'nav.proyectos', path: 'proyectos' },
   { key: 'nav.comunidad', path: 'comunidad' },

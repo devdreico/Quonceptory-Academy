@@ -3,6 +3,8 @@ import type { LocaleNs } from '../types';
 export const homeNs: LocaleNs = {
   es: {
     'home.meta.title': 'Quonceptory Academy — Academia de IA con método',
+    'home.hero.quote': 'La ciencia es la cultura de la duda.',
+    'home.hero.quoteBy': 'Richard Feynman',
     'home.hero.kicker': 'Academia de inteligencia artificial · +2000 profesionales',
     'home.hero.line1': 'La IA no se aprende,',
     'home.hero.line2': 'se dirige.',
@@ -85,6 +87,8 @@ export const homeNs: LocaleNs = {
   },
   en: {
     'home.meta.title': 'Quonceptory Academy — AI academy with a method',
+    'home.hero.quote': 'Science is the culture of doubt.',
+    'home.hero.quoteBy': 'Richard Feynman',
     'home.hero.kicker': 'Artificial intelligence academy · 2000+ professionals',
     'home.hero.line1': 'AI is not learned,',
     'home.hero.line2': 'it is directed.',

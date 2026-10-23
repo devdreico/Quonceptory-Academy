@@ -12,8 +12,10 @@ import { interpolate } from '@/lib/utils';
 
 import { commonNs } from './namespaces/common';
 import { homeNs } from './namespaces/home';
+import { cienciaNs } from './namespaces/ciencia';
 import { academiaNs } from './namespaces/academia';
 import { catalogoNs } from './namespaces/catalogo';
+import { metodoNs } from './namespaces/metodo';
 import { proyectosNs } from './namespaces/proyectos';
 import { comunidadNs } from './namespaces/comunidad';
 import { eventosNs } from './namespaces/eventos';
@@ -32,8 +34,10 @@ const dictionaries: Record<Locale, LocaleDict> = {
     {},
     commonNs.es,
     homeNs.es,
+    cienciaNs.es,
     academiaNs.es,
     catalogoNs.es,
+    metodoNs.es,
     proyectosNs.es,
     comunidadNs.es,
     eventosNs.es,
@@ -47,8 +51,10 @@ const dictionaries: Record<Locale, LocaleDict> = {
     {},
     commonNs.en,
     homeNs.en,
+    cienciaNs.en,
     academiaNs.en,
     catalogoNs.en,
+    metodoNs.en,
     proyectosNs.en,
     comunidadNs.en,
     eventosNs.en,

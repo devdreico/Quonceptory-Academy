@@ -5,8 +5,14 @@ import { RootRedirect } from './RootRedirect';
 import { ProtectedRoute } from '@/auth/ProtectedRoute';
 
 const HomePage = lazy(() => import('@/features/home/HomePage').then((m) => ({ default: m.HomePage })));
+const CienciaPage = lazy(() =>
+  import('@/features/ciencia/CienciaPage').then((m) => ({ default: m.CienciaPage })),
+);
 const AcademiaPage = lazy(() =>
   import('@/features/academia/AcademiaPage').then((m) => ({ default: m.AcademiaPage })),
+);
+const MetodoPage = lazy(() =>
+  import('@/features/metodo/MetodoPage').then((m) => ({ default: m.MetodoPage })),
 );
 const CatalogoPage = lazy(() =>
   import('@/features/catalogo/CatalogoPage').then((m) => ({ default: m.CatalogoPage })),
@@ -55,7 +61,9 @@ export const router = createBrowserRouter([
     element: <LocaleLayout />,
     children: [
       { index: true, element: withSuspense(<HomePage />) },
+      { path: 'ciencia', element: withSuspense(<CienciaPage />) },
       { path: 'academia', element: withSuspense(<AcademiaPage />) },
+      { path: 'metodo', element: withSuspense(<MetodoPage />) },
       { path: 'herramientas', element: withSuspense(<CatalogoPage />) },
       { path: 'proyectos', element: withSuspense(<ProyectosPage />) },
       { path: 'comunidad', element: withSuspense(<ComunidadPage />) },

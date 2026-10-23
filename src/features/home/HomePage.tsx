@@ -1,14 +1,6 @@
-import { Fragment } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import {
-  ArrowDown,
-  ArrowRight,
-  ArrowUpRight,
-  BrainCircuit,
-  Code2,
-  Database,
-  Sparkles,
-} from 'lucide-react';
+import { Fragment, useEffect, useRef, useState } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, BrainCircuit, Code2, Database, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { siteConfig } from '@/config/site';
 import { Badge } from '@/components/ui/Badge';
@@ -27,13 +19,42 @@ import { EASE_OUT_EXPO } from '@/lib/animations';
 
 const trackIcons = [BrainCircuit, Sparkles, Database, Code2];
 
+const HERO_SLIDE_MS = 7000;
+
+const HERO_SLIDES = [
+  {
+    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Black_hole_-_Messier_87_crop_max_res.jpg/1280px-Black_hole_-_Messier_87_crop_max_res.jpg',
+    position: 'center',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=2000&q=80',
+    position: 'center',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2000&q=80',
+    position: 'center',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1614642264762-d0a3b8bf3700?auto=format&fit=crop&w=2000&q=80',
+    position: 'center',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?auto=format&fit=crop&w=2000&q=80',
+    position: 'center',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=2000&q=80',
+    position: 'center',
+  },
+] as const;
+
 const heroWord = {
-  hidden: { opacity: 0, y: 28, filter: 'blur(6px)' },
+  hidden: { opacity: 0, y: 30, filter: 'blur(8px)' },
   show: {
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
-    transition: { duration: 0.7, ease: EASE_OUT_EXPO },
+    transition: { duration: 0.9, ease: EASE_OUT_EXPO },
   },
 } as const;
 
@@ -42,6 +63,20 @@ export function HomePage() {
   const reduced = useReducedMotion();
   useMeta(t('home.meta.title'), siteConfig.description[locale]);
 
+  const heroRef = useRef<HTMLElement>(null);
+  const [slide, setSlide] = useState(0);
+  const { scrollY } = useScroll();
+  const parallaxY = useTransform(scrollY, [0, 700], [0, 140]);
+  const quoteOpacity = useTransform(scrollY, [0, 420], [1, 0]);
+
+  useEffect(() => {
+    if (reduced) return;
+    const id = window.setInterval(() => {
+      setSlide((current) => (current + 1) % HERO_SLIDES.length);
+    }, HERO_SLIDE_MS);
+    return () => window.clearInterval(id);
+  }, [reduced]);
+
   const upcoming = events
     .filter((event) => new Date(event.date).getTime() > Date.now())
     .sort((a, b) => Date.parse(a.date) - Date.parse(b.date))
@@ -49,35 +84,54 @@ export function HomePage() {
   const featuredProjects = projects.filter((project) => project.featured).slice(0, 3);
   const featuredPosts = posts.filter((post) => post.featured).slice(0, 3);
 
-  const line1Words = t('home.hero.line1').split(' ');
+  const quoteWords = t('home.hero.quote').split(' ');
 
   return (
     <>
-      <section className="relative overflow-hidden border-b border-line">
-        <div className="grid-bg absolute inset-0" aria-hidden="true" />
-        <div
-          className="pointer-events-none absolute -top-40 left-1/2 size-[38rem] -translate-x-1/2 rounded-full bg-glow blur-3xl animate-float-slow"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute top-1/3 -right-32 size-72 rounded-full bg-glow blur-3xl animate-float"
-          aria-hidden="true"
-        />
-        <div className="shell relative grid min-h-[78vh] items-center gap-14 py-24 lg:grid-cols-[1.15fr_0.85fr] lg:py-32">
-          <div>
-            <Reveal>
-              <span className="glass inline-flex items-center gap-2.5 rounded-full px-4 py-1.5 text-xs font-semibold text-ink-soft">
-                <span className="size-1.5 rounded-full bg-accent-500 animate-pulse-dot" aria-hidden="true" />
-                {t('home.hero.kicker')}
-              </span>
-            </Reveal>
-            <motion.h1
-              className="mt-8 max-w-4xl text-5xl font-extrabold leading-[1.04] tracking-[-0.045em] text-balance sm:text-6xl lg:text-7xl"
-              initial="hidden"
-              animate="show"
-              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07, delayChildren: 0.15 } } }}
+      <section
+        ref={heroRef}
+        className="relative h-[calc(100svh-4rem)] min-h-[540px] overflow-hidden md:h-[calc(100svh-4.5rem)]"
+      >
+        <motion.div style={reduced ? undefined : { y: parallaxY }} className="absolute inset-0">
+          {HERO_SLIDES.map((item, index) => (
+            <motion.div
+              key={item.src}
+              className="absolute inset-0"
+              initial={false}
+              animate={{ opacity: index === slide ? 1 : 0 }}
+              transition={{ duration: reduced ? 0 : 1.8, ease: 'easeInOut' }}
+              aria-hidden={index === slide ? undefined : true}
             >
-              {line1Words.map((word, index) => (
+              <img
+                src={item.src}
+                alt=""
+                draggable={false}
+                loading={index === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+                className={reduced ? 'h-full w-full object-cover' : 'h-full w-full object-cover animate-kenburns'}
+                style={{ objectPosition: item.position, animationDirection: index % 2 ? 'alternate-reverse' : 'alternate' }}
+              />
+            </motion.div>
+          ))}
+        </motion.div>
+
+        <div
+          className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/30 to-black/60"
+          aria-hidden="true"
+        />
+
+        <motion.div
+          style={reduced ? undefined : { opacity: quoteOpacity }}
+          className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white"
+        >
+          <motion.blockquote
+            className="max-w-5xl"
+            initial="hidden"
+            animate="show"
+            transition={{ staggerChildren: 0.09, delayChildren: 0.35 }}
+          >
+            <p className="text-4xl font-extrabold leading-[1.12] tracking-[-0.03em] text-balance drop-shadow-[0_4px_32px_rgb(0_0_0/0.65)] sm:text-5xl md:text-6xl lg:text-7xl">
+              {quoteWords.map((word, index) => (
                 <motion.span
                   key={`${word}-${index}`}
                   className="inline-block"
@@ -85,79 +139,28 @@ export function HomePage() {
                   style={reduced ? { opacity: 1 } : undefined}
                 >
                   {word}
-                  {index < line1Words.length - 1 ? ' ' : ''}
+                  {index < quoteWords.length - 1 ? ' ' : ''}
                 </motion.span>
-              ))}{' '}
-              <span className="bg-gradient-to-r from-ink via-ink to-muted bg-clip-text text-transparent">
-                {t('home.hero.line2')}
-              </span>
-            </motion.h1>
-            <Reveal delay={0.35}>
-              <p className="mt-7 max-w-2xl text-lg leading-relaxed text-ink-soft">
-                {siteConfig.tagline[locale]}
-              </p>
-              <div className="mt-9 flex flex-wrap gap-3">
-                <MagneticButton>
-                  <LinkButton to={`/${locale}/academia`} size="lg">
-                    {t('home.hero.ctaStart')} <ArrowRight className="size-4" aria-hidden="true" />
-                  </LinkButton>
-                </MagneticButton>
-                <LinkButton to={`/${locale}/herramientas`} variant="outline" size="lg">
-                  {t('home.hero.ctaTools')}
-                </LinkButton>
-              </div>
-              <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
-                {[t('home.hero.trust1'), t('home.hero.trust2'), t('home.hero.trust3')].map((item) => (
-                  <span key={item} className="flex items-center gap-2">
-                    <span className="size-1.5 rounded-full bg-accent-500 animate-pulse-dot" aria-hidden="true" />
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-          <Reveal className="relative mx-auto w-full max-w-md" delay={0.2}>
-            <SpotlightCard className="grain p-7 sm:p-9">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-[0.18em] text-muted">
-                  {t('home.method.phasesLabel')}
-                </span>
-                <Sparkles className="size-5 text-accent-500" aria-hidden="true" />
-              </div>
-              <StaggerContainer className="mt-8 space-y-4" staggerChildren={0.1}>
-                {[
-                  { number: '01', title: locale === 'es' ? 'Delimitar el problema' : 'Define the problem' },
-                  { number: '02', title: locale === 'es' ? 'Investigar con método' : 'Research methodically' },
-                  { number: '03', title: locale === 'es' ? 'Construir la solución' : 'Build the solution' },
-                  { number: '04', title: locale === 'es' ? 'Medir y escalar' : 'Measure and scale' },
-                ].map((phase, index) => (
-                  <StaggerItem key={phase.number}>
-                    <div className="group flex items-center gap-4 rounded-2xl border border-line/70 bg-glass-bg px-4 py-3 backdrop-blur-md transition-all duration-300 hover:border-line-strong hover:bg-glass-strong">
-                      <span className="font-mono text-xs text-accent-500">{phase.number}</span>
-                      <span className="text-sm font-semibold">{phase.title}</span>
-                      {index === 3 ? (
-                        <ArrowUpRight
-                          className="ml-auto size-4 text-muted transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                          aria-hidden="true"
-                        />
-                      ) : null}
-                    </div>
-                  </StaggerItem>
-                ))}
-              </StaggerContainer>
-              <Link
-                to={`/${locale}/academia`}
-                className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-accent-500 transition-transform duration-300 hover:translate-x-0.5"
+              ))}
+            </p>
+            <motion.footer
+              className="mt-8"
+              initial={reduced ? { opacity: 1 } : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: reduced ? 0 : 1.15, ease: EASE_OUT_EXPO }}
+            >
+              <span
+                className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.3em] text-white/75 drop-shadow-[0_2px_12px_rgb(0_0_0/0.6)] sm:text-sm"
               >
-                {t('home.hero.ctaMethod')} <ArrowRight className="size-4" aria-hidden="true" />
-              </Link>
-            </SpotlightCard>
-          </Reveal>
-        </div>
-        <div className="shell relative flex items-center gap-2 pb-7 text-xs font-bold uppercase tracking-widest text-muted">
-          <ArrowDown className="size-4 animate-pulse-dot" aria-hidden="true" /> {t('common.scroll')}
-        </div>
+                <span className="h-px w-8 bg-white/50" aria-hidden="true" />
+                {t('home.hero.quoteBy')}
+                <span className="h-px w-8 bg-white/50" aria-hidden="true" />
+              </span>
+            </motion.footer>
+          </motion.blockquote>
+        </motion.div>
       </section>
+
 
       <section className="shell py-16">
         <p className="mb-8 text-center text-xs font-bold uppercase tracking-[0.18em] text-muted">

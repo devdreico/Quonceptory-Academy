@@ -301,6 +301,19 @@
   animation: q-pulse-dot 2.4s ease-in-out infinite;
 }
 
+@keyframes q-kenburns {
+  0% {
+    transform: scale(1.06) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.2) translate3d(-2.5%, -1.5%, 0);
+  }
+}
+
+@utility animate-kenburns {
+  animation: q-kenburns 20s ease-in-out infinite alternate;
+}
+
 @keyframes q-shine {
   0% {
     transform: translateX(-120%) skewX(-18deg);
