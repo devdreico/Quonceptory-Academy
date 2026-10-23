@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, BrainCircuit, Code2, Database, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { siteConfig } from '@/config/site';
@@ -11,6 +11,7 @@ import { MagneticButton } from '@/components/ui/MagneticButton';
 import { Marquee } from '@/components/ui/Marquee';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Reveal, StaggerContainer, StaggerItem } from '@/components/ui/Reveal';
+import { SocialIcon } from '@/components/ui/SocialIcon';
 import { useLocale } from '@/i18n';
 import { events, posts, projects, stats, toolCategories, allTools, tracks } from '@/data';
 import { formatDate, formatNumber } from '@/lib/utils';
@@ -64,10 +65,20 @@ export function HomePage() {
   useMeta(t('home.meta.title'), siteConfig.description[locale]);
 
   const heroRef = useRef<HTMLElement>(null);
+  const storyRef = useRef<HTMLElement>(null);
   const [slide, setSlide] = useState(0);
+  const [activePhase, setActivePhase] = useState(0);
   const { scrollY } = useScroll();
+  const { scrollYProgress: storyProgress } = useScroll({
+    target: storyRef,
+    offset: ['start start', 'end end'],
+  });
   const parallaxY = useTransform(scrollY, [0, 700], [0, 140]);
   const quoteOpacity = useTransform(scrollY, [0, 420], [1, 0]);
+
+  useMotionValueEvent(storyProgress, 'change', (progress) => {
+    setActivePhase(Math.min(3, Math.floor(progress * 4)));
+  });
 
   useEffect(() => {
     if (reduced) return;
@@ -212,30 +223,137 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="border-b border-line">
-        <div className="shell py-20 md:py-28">
+      <section ref={storyRef} className="relative border-y border-line bg-glass-bg">
+        <div className="shell py-16 md:py-24">
           <PageHeader
             kicker={t('home.method.phasesLabel')}
             title={t('home.method.title')}
             desc={t('home.method.desc')}
-            className="border-0 bg-transparent p-0 pt-0 pb-10 md:pt-0"
+            className="border-0 bg-transparent p-0 pb-12"
           />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {tracks.slice(0, 4).map((track, index) => {
-              const Icon = trackIcons[index];
-              return (
-                <SpotlightCard key={track.id} className="p-5">
-                  <div className="flex size-11 items-center justify-center rounded-2xl border border-line bg-glass-bg backdrop-blur-md">
-                    <Icon className="size-5 text-accent-500" aria-hidden="true" />
+          <div className="grid items-start gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+            <div className="relative">
+              {tracks.slice(0, 4).map((track, index) => {
+                return (
+                  <div key={track.id} className="flex min-h-[42vh] items-center py-8">
+                    <motion.div
+                      animate={{ opacity: activePhase === index ? 1 : 0.48, x: activePhase === index ? 0 : 8 }}
+                      transition={{ duration: reduced ? 0 : 0.35 }}
+                      className="max-w-sm"
+                    >
+                      <p className="text-xs font-bold uppercase tracking-widest text-accent-500">
+                        {String(index + 1).padStart(2, '0')} / 04
+                      </p>
+                      <h3 className="mt-3 text-2xl font-bold md:text-3xl">{tp(track.title)}</h3>
+                      <p className="mt-3 text-sm leading-relaxed text-muted">{tp(track.desc)}</p>
+                    </motion.div>
                   </div>
-                  <p className="mt-5 text-xs font-bold uppercase tracking-widest text-muted">
-                    {String(index + 1).padStart(2, '0')} / 04
-                  </p>
-                  <h3 className="mt-2 font-bold">{tp(track.title)}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{tp(track.desc)}</p>
-                </SpotlightCard>
-              );
-            })}
+                );
+              })}
+            </div>
+
+            <div className="sticky top-24 flex min-h-[58vh] items-center py-6">
+              <div className="glass grain relative grid min-h-[58vh] w-full place-items-center overflow-hidden rounded-3xl p-6 md:p-10">
+                <div className="grid-bg pointer-events-none absolute inset-0 opacity-50" aria-hidden="true" />
+                <div className="relative aspect-square w-full max-w-[31rem]">
+                  <div className="absolute inset-[15%] rounded-full border border-line-strong" />
+                  <div className="absolute inset-[29%] rounded-full border border-line" />
+                  <div className="absolute inset-[43%] rounded-full border border-line" />
+                  <div className="absolute left-1/2 top-[15%] h-[70%] w-px -translate-x-1/2 bg-line-strong" />
+                  <div className="absolute left-[15%] top-1/2 h-px w-[70%] -translate-y-1/2 bg-line-strong" />
+                  {tracks.slice(0, 4).map((track, index) => {
+                    const Icon = trackIcons[index];
+                    const positions = [
+                      'left-1/2 top-[4%] -translate-x-1/2',
+                      'right-[4%] top-1/2 -translate-y-1/2',
+                      'bottom-[4%] left-1/2 -translate-x-1/2',
+                      'left-[4%] top-1/2 -translate-y-1/2',
+                    ];
+                    const visible = index <= activePhase;
+                    return (
+                      <motion.div
+                        key={track.id}
+                        initial={false}
+                        animate={{ opacity: visible ? 1 : 0.22, scale: visible ? 1 : 0.82 }}
+                        transition={{ duration: reduced ? 0 : 0.45, ease: EASE_OUT_EXPO }}
+                        className={`absolute z-10 ${positions[index]} flex size-14 items-center justify-center rounded-2xl border border-line bg-bg shadow-[0_8px_24px_rgb(0_0_0/0.12)] md:size-16`}
+                        aria-label={tp(track.title)}
+                      >
+                        <Icon className="size-5 text-accent-500 md:size-6" aria-hidden="true" />
+                      </motion.div>
+                    );
+                  })}
+                  <div className="absolute inset-[34%] flex flex-col items-center justify-center rounded-full bg-accent-500 text-center text-on-accent shadow-[0_16px_44px_rgb(0_0_0/0.25)]">
+                    <span className="text-[10px] font-bold uppercase tracking-widest opacity-70">Quonceptory</span>
+                    <span className="mt-1 text-sm font-extrabold md:text-base">
+                      {tp(tracks[activePhase]?.title ?? tracks[0].title)}
+                    </span>
+                  </div>
+                  <motion.div
+                    className="absolute inset-[8%] rounded-full border border-accent-500/30"
+                    animate={reduced ? undefined : { rotate: 360 }}
+                    transition={{ duration: 32, repeat: Infinity, ease: 'linear' }}
+                    aria-hidden="true"
+                  />
+                </div>
+                <div className="absolute bottom-5 left-6 right-6 flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-muted md:left-10 md:right-10">
+                  <span>{locale === 'es' ? 'Sistema en evolución' : 'Evolving system'}</span>
+                  <span>{String(activePhase + 1).padStart(2, '0')} / 04</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-line bg-glass-bg">
+        <div className="shell py-16 md:py-24">
+          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-accent-500">
+                {locale === 'es' ? 'Ideas en movimiento' : 'Ideas in motion'}
+              </p>
+              <h2 className="mt-3 max-w-xl text-3xl font-extrabold md:text-5xl">
+                {locale === 'es' ? 'La conversación continúa en nuestras redes.' : 'The conversation continues across our channels.'}
+              </h2>
+            </div>
+            <a
+              href={`https://www.youtube.com/results?search_query=${encodeURIComponent('Founder - Allerihe')}`}
+              target="_blank"
+              rel="noreferrer"
+              className="group relative flex min-h-48 items-end justify-between overflow-hidden rounded-2xl bg-[#d82424] p-6 text-white shadow-[0_12px_30px_rgb(80_0_0/0.18)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgb(80_0_0/0.26)] md:min-h-56 md:p-8"
+            >
+              <div className="absolute -right-8 -top-12 size-56 rounded-full border border-white/20 transition-transform duration-700 group-hover:scale-110" aria-hidden="true" />
+              <div className="relative">
+                <p className="text-xs font-bold uppercase tracking-widest text-white/75">YouTube</p>
+                <h3 className="mt-3 text-2xl font-extrabold md:text-4xl">Founder - Allerihe</h3>
+                <p className="mt-2 text-sm text-white/80">
+                  {locale === 'es' ? 'Ver canal y conversaciones' : 'Explore the channel and conversations'}
+                </p>
+              </div>
+              <span className="relative flex size-12 shrink-0 items-center justify-center rounded-full bg-white text-[#d82424] shadow-lg transition-transform duration-300 group-hover:translate-x-1">
+                <ArrowRight className="size-5" aria-hidden="true" />
+              </span>
+            </a>
+          </div>
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {siteConfig.socials
+              .filter((social) => ['Instagram', 'TikTok', 'YouTube', 'LinkedIn', 'X'].includes(social.label))
+              .map((social) => (
+                <a
+                  key={social.label}
+                  href={social.label === 'YouTube' ? `https://www.youtube.com/results?search_query=${encodeURIComponent('Founder - Allerihe')}` : social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="glass group flex min-h-16 items-center justify-between gap-3 rounded-xl px-4 transition-all duration-300 hover:-translate-y-1 hover:glass-strong"
+                >
+                  <span className="flex items-center gap-3 text-sm font-semibold">
+                    <SocialIcon name={social.icon} className="size-4 text-accent-500" />
+                    {social.label}
+                  </span>
+                  <ArrowRight className="size-4 text-muted transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </a>
+              ))}
           </div>
         </div>
       </section>

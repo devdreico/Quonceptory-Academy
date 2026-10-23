@@ -23,7 +23,7 @@ const SIZE_CLASSES: Record<ButtonSize, string> = {
 };
 
 const BASE_CLASSES =
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition-all duration-300 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50';
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0.5 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50';
 
 export function buttonVariants(opts?: { variant?: ButtonVariant; size?: ButtonSize }): string {
   const variant = opts?.variant ?? 'primary';
