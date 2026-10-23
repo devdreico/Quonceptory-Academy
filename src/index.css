@@ -1,0 +1,191 @@
+@import '@fontsource-variable/montserrat';
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --q-bg: #ffffff;
+  --q-surface: #f6f6f7;
+  --q-surface-2: #ececee;
+  --q-ink: #0a0a0a;
+  --q-ink-soft: #3c3c42;
+  --q-muted: #6c6c76;
+  --q-line: rgb(10 10 10 / 0.12);
+  --q-line-strong: rgb(10 10 10 / 0.24);
+  --q-logo-filter: none;
+  --q-grain-opacity: 0.03;
+  --q-glow: rgb(106 60 255 / 0.14);
+  --q-glow-strong: rgb(106 60 255 / 0.28);
+  color-scheme: light;
+}
+
+.dark {
+  --q-bg: #000000;
+  --q-surface: #0b0b0d;
+  --q-surface-2: #141417;
+  --q-ink: #f5f5f6;
+  --q-ink-soft: #c8c8cf;
+  --q-muted: #8b8b95;
+  --q-line: rgb(245 245 246 / 0.14);
+  --q-line-strong: rgb(245 245 246 / 0.3);
+  --q-logo-filter: invert(1);
+  --q-grain-opacity: 0.05;
+  --q-glow: rgb(106 60 255 / 0.3);
+  --q-glow-strong: rgb(106 60 255 / 0.5);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--q-bg);
+  --color-surface: var(--q-surface);
+  --color-surface-2: var(--q-surface-2);
+  --color-ink: var(--q-ink);
+  --color-ink-soft: var(--q-ink-soft);
+  --color-muted: var(--q-muted);
+  --color-line: var(--q-line);
+  --color-line-strong: var(--q-line-strong);
+  --color-glow: var(--q-glow);
+  --color-glow-strong: var(--q-glow-strong);
+
+  --color-accent-50: #f2eeff;
+  --color-accent-100: #e4dbff;
+  --color-accent-200: #c9b6ff;
+  --color-accent-300: #a98dff;
+  --color-accent-400: #8b63ff;
+  --color-accent-500: #6a3cff;
+  --color-accent-600: #5a27f0;
+  --color-accent-700: #491dd0;
+  --color-accent-800: #3a18a6;
+  --color-accent-900: #2e1480;
+  --color-accent-950: #1a0c4c;
+
+  --font-sans: 'Montserrat Variable', Montserrat, ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--q-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--q-bg);
+    color: var(--q-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'ss01' on, 'cv01' on;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-accent-500);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-500);
+    outline-offset: 3px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--q-line-strong);
+    border-radius: 999px;
+    border: 3px solid var(--q-bg);
+  }
+}
+
+@utility shell {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+@utility logo-negative {
+  filter: var(--q-logo-filter);
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility grain {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: var(--q-grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+}
+
+@utility grid-bg {
+  background-image:
+    linear-gradient(to right, var(--q-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--q-line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 35%, transparent 78%);
+}
+
+@utility marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@utility animate-spin-slow {
+  animation: spin-slow 18s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
