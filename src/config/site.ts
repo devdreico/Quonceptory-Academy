@@ -1,5 +1,14 @@
 import type { BiString } from '@/data/types';
 
+export type SocialIconName =
+  | 'instagram'
+  | 'tiktok'
+  | 'youtube'
+  | 'linkedin'
+  | 'x'
+  | 'github'
+  | 'discord';
+
 export const siteConfig = {
   name: 'Quonceptory',
   fullName: { es: 'Quonceptory Academy', en: 'Quonceptory Academy' } satisfies BiString,
@@ -21,12 +30,14 @@ export const siteConfig = {
     en: 'We operate remotely from and to the whole world.',
   } satisfies BiString,
   socials: [
-    { label: 'LinkedIn', href: 'https://linkedin.com/company/quonceptory' },
-    { label: 'X', href: 'https://x.com/quonceptory' },
-    { label: 'YouTube', href: 'https://youtube.com/@quonceptory' },
-    { label: 'GitHub', href: 'https://github.com/quonceptory' },
-    { label: 'Discord', href: 'https://discord.gg/quonceptory' },
-  ],
+    { label: 'Instagram', href: 'https://instagram.com/quonceptory', icon: 'instagram' },
+    { label: 'TikTok', href: 'https://tiktok.com/@quonceptory', icon: 'tiktok' },
+    { label: 'YouTube', href: 'https://youtube.com/@quonceptory', icon: 'youtube' },
+    { label: 'LinkedIn', href: 'https://linkedin.com/company/quonceptory', icon: 'linkedin' },
+    { label: 'X', href: 'https://x.com/quonceptory', icon: 'x' },
+    { label: 'GitHub', href: 'https://github.com/quonceptory', icon: 'github' },
+    { label: 'Discord', href: 'https://discord.gg/quonceptory', icon: 'discord' },
+  ] satisfies ReadonlyArray<{ label: string; href: string; icon: SocialIconName }>,
   logo: {
     src: '/logo.png',
     alt: 'Quonceptory Academy',

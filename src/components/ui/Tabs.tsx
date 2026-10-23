@@ -22,7 +22,7 @@ export function Tabs<T extends string>({ tabs, value, onChange, className }: Tab
     <div
       role="tablist"
       className={cn(
-        'inline-flex flex-wrap items-center gap-1 rounded-full border border-line bg-surface p-1',
+        'glass inline-flex flex-wrap items-center gap-1 rounded-full p-1',
         className,
       )}
     >
@@ -38,13 +38,13 @@ export function Tabs<T extends string>({ tabs, value, onChange, className }: Tab
             onClick={() => onChange(tab.id)}
             className={cn(
               'relative inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-300',
-              active ? 'text-white' : 'text-ink-soft hover:text-ink',
+              active ? 'text-pill-ink' : 'text-ink-soft hover:text-ink',
             )}
           >
             {active ? (
               <motion.span
                 layoutId="tab-indicator"
-                className="absolute inset-0 rounded-full bg-accent-500"
+                className="absolute inset-0 rounded-full bg-pill shadow-[0_2px_10px_rgb(0_0_0/0.18)]"
                 transition={
                   reduced ? { duration: 0 } : { type: 'spring', bounce: 0.2, duration: 0.55 }
                 }

@@ -23,7 +23,10 @@ export function LocaleSwitch({ className }: LocaleSwitchProps) {
     <div
       role="group"
       aria-label={t('nav.language')}
-      className={cn('inline-flex shrink-0 items-center rounded-full border border-line p-0.5', className)}
+      className={cn(
+        'glass inline-flex shrink-0 items-center rounded-full p-0.5',
+        className,
+      )}
     >
       {LOCALES.map((code) => {
         const active = code === locale;
@@ -35,7 +38,7 @@ export function LocaleSwitch({ className }: LocaleSwitchProps) {
             aria-pressed={active}
             className={cn(
               'rounded-full px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider transition-colors duration-300',
-              active ? 'bg-accent-500 text-white' : 'text-muted hover:text-ink',
+              active ? 'bg-pill text-pill-ink' : 'text-muted hover:text-ink',
             )}
           >
             {code}

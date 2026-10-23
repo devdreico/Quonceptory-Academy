@@ -62,8 +62,9 @@ export function Header() {
     <>
       <header
         className={cn(
-          'sticky top-0 z-50 border-b border-line bg-bg/80 backdrop-blur-xl transition-shadow duration-300',
-          scrolled && 'shadow-[0_1px_0_0_var(--q-line),0_8px_30px_-12px_rgb(0_0_0/0.35)]',
+          'sticky top-0 z-50 border-b border-line bg-bg/60 backdrop-blur-2xl backdrop-saturate-180 transition-all duration-300',
+          scrolled &&
+            'bg-bg/80 shadow-[0_1px_0_0_var(--q-glass-line),0_12px_40px_-16px_rgb(0_0_0/0.25)]',
         )}
       >
         <div className="shell flex h-16 items-center justify-between gap-4 md:h-18">
@@ -86,7 +87,7 @@ export function Header() {
                 className={({ isActive }) =>
                   cn(
                     'relative px-3 py-2 text-sm font-medium transition-colors duration-300',
-                    isActive ? 'text-accent-500' : 'text-ink-soft hover:text-ink',
+                    isActive ? 'text-ink' : 'text-ink-soft hover:text-ink',
                   )
                 }
               >
@@ -96,7 +97,7 @@ export function Header() {
                     {isActive ? (
                       <motion.span
                         layoutId="nav-indicator"
-                        className="absolute inset-x-2.5 bottom-0 h-px bg-accent-500"
+                        className="absolute inset-x-2.5 bottom-0 h-0.5 rounded-full bg-accent-500"
                         transition={
                           reduced
                             ? { duration: 0 }
@@ -140,7 +141,7 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduced ? { opacity: 0 } : { opacity: 0, y: -12 }}
             transition={{ duration: reduced ? 0.15 : 0.4, ease: EASE_OUT_EXPO }}
-            className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto border-t border-line bg-bg/95 backdrop-blur-xl lg:hidden"
+            className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto border-t border-line bg-bg/85 backdrop-blur-2xl lg:hidden"
           >
             <nav className="shell flex flex-col py-8" aria-label="Mobile">
               {NAV_ITEMS.map((item, index) => (
@@ -160,7 +161,7 @@ export function Header() {
                     className={({ isActive }) =>
                       cn(
                         'flex items-baseline gap-4 border-b border-line py-4 text-3xl font-extrabold tracking-tight transition-colors duration-300',
-                        isActive ? 'text-accent-500' : 'text-ink hover:text-accent-500',
+                        isActive ? 'text-ink' : 'text-ink-soft hover:text-ink',
                       )
                     }
                   >

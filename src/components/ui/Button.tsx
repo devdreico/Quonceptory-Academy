@@ -8,9 +8,11 @@ export type ButtonVariant = 'primary' | 'outline' | 'ghost' | 'accent-soft';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
-  primary: 'bg-accent-500 text-white hover:bg-accent-600',
-  outline: 'border border-line-strong hover:border-accent-500 hover:text-accent-500',
-  ghost: 'hover:bg-surface-2',
+  primary:
+    'bg-accent-500 text-on-accent shadow-[0_1px_2px_rgb(0_0_0/0.08),0_10px_28px_-10px_rgb(0_0_0/0.45)] hover:bg-accent-600 hover:shadow-[0_2px_4px_rgb(0_0_0/0.1),0_16px_36px_-10px_rgb(0_0_0/0.5)]',
+  outline:
+    'glass text-ink hover:bg-accent-500/5 hover:border-line-strong hover:text-accent-500',
+  ghost: 'hover:bg-accent-500/8',
   'accent-soft': 'bg-accent-500/10 text-accent-500 hover:bg-accent-500/20',
 };
 
@@ -21,7 +23,7 @@ const SIZE_CLASSES: Record<ButtonSize, string> = {
 };
 
 const BASE_CLASSES =
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition-all duration-300 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50';
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition-all duration-300 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50';
 
 export function buttonVariants(opts?: { variant?: ButtonVariant; size?: ButtonSize }): string {
   const variant = opts?.variant ?? 'primary';

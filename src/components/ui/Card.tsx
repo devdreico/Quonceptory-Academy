@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react';
+import { useRef, useState, type HTMLAttributes, type MouseEvent } from 'react';
 import { cn } from '@/lib/utils';
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
@@ -8,11 +8,7 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 export function Card({ group = false, className, ...props }: CardProps) {
   return (
     <div
-      className={cn(
-        'rounded-2xl border border-line bg-surface',
-        group && 'group',
-        className,
-      )}
+      className={cn('glass rounded-3xl transition-colors duration-300', group && 'group', className)}
       {...props}
     />
   );
@@ -24,10 +20,53 @@ export function CardInteractive({ className, ...props }: CardInteractiveProps) {
   return (
     <div
       className={cn(
-        'cursor-pointer rounded-2xl border border-line bg-surface transition-all duration-300 hover:-translate-y-0.5 hover:border-line-strong',
+        'glass cursor-pointer rounded-3xl transition-all duration-500 ease-out hover:-translate-y-1 hover:glass-strong',
         className,
       )}
       {...props}
     />
+  );
+}
+
+export interface SpotlightCardProps extends HTMLAttributes<HTMLDivElement> {
+  spotlightSize?: number;
+}
+
+export function SpotlightCard({
+  className,
+  spotlightSize = 420,
+  children,
+  ...props
+}: SpotlightCardProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState({ x: 0, y: 0, active: false });
+
+  const handleMove = (event: MouseEvent<HTMLDivElement>) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    setPos({ x: event.clientX - rect.left, y: event.clientY - rect.top, active: true });
+  };
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={handleMove}
+      onMouseLeave={() => setPos((prev) => ({ ...prev, active: false }))}
+      className={cn(
+        'glass group relative overflow-hidden rounded-3xl transition-all duration-500 ease-out hover:-translate-y-1 hover:glass-strong',
+        className,
+      )}
+      {...props}
+    >
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 transition-opacity duration-500"
+        style={{
+          opacity: pos.active ? 1 : 0,
+          background: `radial-gradient(${spotlightSize}px circle at ${pos.x}px ${pos.y}px, var(--q-spot), transparent 65%)`,
+        }}
+      />
+      <div className="relative">{children}</div>
+    </div>
   );
 }

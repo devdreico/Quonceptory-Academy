@@ -3,6 +3,7 @@ import { siteConfig } from '@/config/site';
 import { LinkButton } from '@/components/ui/Button';
 import { LocaleSwitch } from '@/components/ui/LocaleSwitch';
 import { Logo } from '@/components/ui/Logo';
+import { SocialIcon } from '@/components/ui/SocialIcon';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { useLocale } from '@/i18n';
 import { Reveal } from '@/components/ui/Reveal';
@@ -29,14 +30,22 @@ export function Footer() {
 
   return (
     <footer className="border-t border-line bg-bg">
-      <section className="grain relative overflow-hidden border-b border-line">
+      <section className="relative overflow-hidden border-b border-line">
         <div className="grid-bg absolute inset-0" aria-hidden="true" />
+        <div
+          className="pointer-events-none absolute -top-24 right-0 size-80 rounded-full bg-glow blur-3xl animate-float-slow"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -bottom-32 left-1/4 size-96 rounded-full bg-glow blur-3xl animate-float"
+          aria-hidden="true"
+        />
         <div className="shell relative py-20 md:py-28">
           <Reveal>
-            <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted">
+            <span className="inline-flex items-center gap-2 rounded-full border border-line bg-glass-bg px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-muted backdrop-blur-md">
               {t('footer.cta')}
             </span>
-            <h2 className="mt-4 max-w-3xl text-4xl font-extrabold tracking-tight text-balance md:text-6xl">
+            <h2 className="mt-5 max-w-3xl text-4xl font-extrabold tracking-tight text-balance md:text-6xl">
               {t('footer.ctaTitle')}
             </h2>
             <p className="mt-5 max-w-xl text-ink-soft">{t('footer.ctaDesc')}</p>
@@ -61,16 +70,18 @@ export function Footer() {
               <h3 className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted">
                 {t('footer.follow')}
               </h3>
-              <ul className="mt-4 space-y-2">
+              <ul className="mt-4 flex flex-wrap gap-2">
                 {siteConfig.socials.map((social) => (
                   <li key={social.label}>
                     <a
                       href={social.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-sm text-ink-soft transition-colors duration-300 hover:text-accent-500"
+                      aria-label={social.label}
+                      title={social.label}
+                      className="glass inline-flex size-10 items-center justify-center rounded-full text-ink-soft transition-all duration-300 hover:-translate-y-0.5 hover:text-ink hover:glass-strong"
                     >
-                      {social.label}
+                      <SocialIcon name={social.icon} />
                     </a>
                   </li>
                 ))}

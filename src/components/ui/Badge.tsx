@@ -4,9 +4,9 @@ import { cn } from '@/lib/utils';
 export type BadgeVariant = 'neutral' | 'accent' | 'outline' | 'solid';
 
 const VARIANT_CLASSES: Record<BadgeVariant, string> = {
-  neutral: 'bg-surface-2 text-ink-soft',
-  accent: 'bg-accent-500/10 text-accent-500',
-  outline: 'border border-line-strong text-ink-soft',
+  neutral: 'bg-surface-2/80 text-ink-soft backdrop-blur-md',
+  accent: 'bg-accent-500/10 text-accent-500 backdrop-blur-md',
+  outline: 'glass text-ink-soft',
   solid: 'bg-ink text-bg',
 };
 

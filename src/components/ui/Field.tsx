@@ -2,7 +2,7 @@ import type { InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from 'rea
 import { cn } from '@/lib/utils';
 
 const FIELD_CLASSES =
-  'w-full rounded-xl border border-line bg-surface px-4 py-3 text-sm text-ink placeholder:text-muted transition-colors duration-300 focus:border-accent-500 focus:outline-none';
+  'w-full rounded-2xl border border-line bg-glass-bg backdrop-blur-xl px-4 py-3 text-sm text-ink placeholder:text-muted transition-all duration-300 focus:border-accent-500 focus:outline-none';
 
 export interface FieldProps {
   label: string;
