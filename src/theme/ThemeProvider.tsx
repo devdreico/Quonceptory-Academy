@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { readStorage, writeStorage } from '@/lib/storage';
 
 export type Theme = 'light' | 'dark';
 
@@ -14,7 +15,7 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 function getInitialTheme(): Theme {
   if (typeof window === 'undefined') return 'light';
-  const stored = window.localStorage.getItem(STORAGE_KEY);
+  const stored = readStorage(STORAGE_KEY);
   if (stored === 'light' || stored === 'dark') return stored;
   return 'light';
 }
@@ -31,13 +32,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const setTheme = useCallback((next: Theme) => {
     setThemeState(next);
-    window.localStorage.setItem(STORAGE_KEY, next);
+    writeStorage(STORAGE_KEY, next);
   }, []);
 
   const toggleTheme = useCallback(() => {
     setThemeState((prev) => {
       const next = prev === 'dark' ? 'light' : 'dark';
-      window.localStorage.setItem(STORAGE_KEY, next);
+      writeStorage(STORAGE_KEY, next);
       return next;
     });
   }, []);

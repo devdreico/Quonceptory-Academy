@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { readJsonStorage, writeStorage } from './storage';
 
 export function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
@@ -30,20 +31,12 @@ export function useMediaQuery(query: string): boolean {
 
 export function useLocalStorage<T>(key: string, initial: T) {
   const [value, setValue] = useState<T>(() => {
-    try {
-      const raw = window.localStorage.getItem(key);
-      return raw ? (JSON.parse(raw) as T) : initial;
-    } catch {
-      return initial;
-    }
+    const stored = readJsonStorage<T | undefined>(key, undefined);
+    return stored === undefined ? initial : stored;
   });
 
   useEffect(() => {
-    try {
-      window.localStorage.setItem(key, JSON.stringify(value));
-    } catch {
-      /* ignore quota errors */
-    }
+    writeStorage(key, JSON.stringify(value));
   }, [key, value]);
 
   return [value, setValue] as const;

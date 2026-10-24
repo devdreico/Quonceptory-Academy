@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { BiString, Locale } from '@/data/types';
 import { interpolate } from '@/lib/utils';
+import { readStorage, writeStorage } from '@/lib/storage';
 
 import { commonNs } from './namespaces/common';
 import { homeNs } from './namespaces/home';
@@ -66,7 +67,7 @@ export function detectLocale(): Locale {
   if (typeof window === 'undefined') return 'es';
   const pathLocale = window.location.pathname.split('/')[1];
   if (isLocale(pathLocale)) return pathLocale;
-  const stored = window.localStorage.getItem(STORAGE_KEY);
+  const stored = readStorage(STORAGE_KEY);
   if (isLocale(stored)) return stored;
   const nav = window.navigator.language.slice(0, 2).toLowerCase();
   return nav === 'en' ? 'en' : 'es';
@@ -87,7 +88,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.lang = locale;
-    window.localStorage.setItem(STORAGE_KEY, locale);
+    writeStorage(STORAGE_KEY, locale);
   }, [locale]);
 
   const setLocale = useCallback((next: Locale) => setLocaleState(next), []);

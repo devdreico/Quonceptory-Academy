@@ -9,6 +9,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { posts } from '@/data';
 import { useLocale } from '@/i18n';
 import { formatDate } from '@/lib/utils';
+import { readJsonStorage, writeStorage } from '@/lib/storage';
 import { useMeta } from '@/lib/useMeta';
 
 const NEWSLETTER_KEY = 'q-newsletter';
@@ -18,6 +19,7 @@ export function BlogPage() {
   const [category, setCategory] = useState('all');
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [storageError, setStorageError] = useState(false);
   useMeta(t('blog.title') + ' — Quonceptory Academy', {
     description: t('blog.desc'),
     canonical: `/${locale}/blog`,
@@ -30,10 +32,18 @@ export function BlogPage() {
   const featured = posts.find((post) => post.featured);
   const handleSubscribe = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const saved: string[] = JSON.parse(window.localStorage.getItem(NEWSLETTER_KEY) ?? '[]');
+    const saved = readJsonStorage<string[]>(
+      NEWSLETTER_KEY,
+      [],
+      (value): value is string[] => Array.isArray(value) && value.every((item) => typeof item === 'string'),
+    );
     const normalized = email.trim().toLowerCase();
     if (!saved.includes(normalized)) saved.push(normalized);
-    window.localStorage.setItem(NEWSLETTER_KEY, JSON.stringify(saved));
+    if (!writeStorage(NEWSLETTER_KEY, JSON.stringify(saved))) {
+      setStorageError(true);
+      return;
+    }
+    setStorageError(false);
     setSubscribed(true);
     setEmail('');
   };
@@ -147,6 +157,11 @@ export function BlogPage() {
                 <Button type="submit">{t('blog.newsletterButton')}</Button>
               </form>
             )}
+            {storageError ? (
+              <p className="mt-3 text-sm text-red-500" role="alert">
+                {t('blog.newsletterStorageError')}
+              </p>
+            ) : null}
             <p className="text-muted mt-4 text-xs">{t('blog.newsletterDemo')}</p>
           </div>
         </div>

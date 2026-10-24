@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
@@ -51,5 +51,15 @@ describe('ProtectedRoute', () => {
     renderRoute('/es/app');
     expect(screen.getByTestId('location')).toHaveTextContent('/es/app');
     expect(screen.getByText('panel')).toBeInTheDocument();
+  });
+
+  it('rejects malformed saved demo sessions', () => {
+    window.localStorage.setItem('q-auth', JSON.stringify({ name: '', email: 'ana@x.com' }));
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    renderRoute('/es/app');
+
+    expect(screen.getByTestId('location')).toHaveTextContent('/es/login');
+    expect(screen.queryByText('panel')).not.toBeInTheDocument();
   });
 });

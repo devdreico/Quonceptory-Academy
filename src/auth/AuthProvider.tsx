@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { readJsonStorage, removeStorage, writeStorage } from '@/lib/storage';
 
 export interface DemoUser {
   name: string;
@@ -17,21 +18,33 @@ const STORAGE_KEY = 'q-auth';
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
+function isDemoUser(value: unknown): value is DemoUser {
+  if (typeof value !== 'object' || value === null) return false;
+  const user = value as Record<string, unknown>;
+  return (
+    typeof user.name === 'string' &&
+    user.name.trim().length > 0 &&
+    typeof user.email === 'string' &&
+    user.email.trim().length > 0 &&
+    typeof user.joinedAt === 'string' &&
+    typeof user.track === 'string'
+  );
+}
+
 function readUser(): DemoUser | null {
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as DemoUser) : null;
-  } catch {
-    return null;
-  }
+  return readJsonStorage<DemoUser | null>(
+    STORAGE_KEY,
+    null,
+    (value): value is DemoUser | null => value === null || isDemoUser(value),
+  );
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<DemoUser | null>(() => readUser());
 
   useEffect(() => {
-    if (user) window.localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-    else window.localStorage.removeItem(STORAGE_KEY);
+    if (user) writeStorage(STORAGE_KEY, JSON.stringify(user));
+    else removeStorage(STORAGE_KEY);
   }, [user]);
 
   const login = useCallback((input: { name: string; email: string; track?: string }) => {
