@@ -41,4 +41,20 @@ describe('HomePage', () => {
     );
     expect(screen.getByText('Marie Curie')).toBeInTheDocument();
   });
+
+  it('links the founder social section to Allerihe profiles', () => {
+    renderHomePage();
+
+    expect(
+      screen.getByText('Sigue a Allerihe, founder de Quonceptory, en sus redes personales.'),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Allerihe' })).toBeInTheDocument();
+
+    const hrefs = [...document.querySelectorAll('a')].map((anchor) => anchor.href);
+    expect(hrefs).toContain('https://youtube.com/@allerihe');
+    expect(hrefs).toContain('https://instagram.com/allerihe');
+    expect(hrefs).toContain('https://tiktok.com/@allerihe');
+    expect(hrefs).toContain('https://allerihe.presentto.online/');
+    expect(hrefs.some((href) => href.includes('youtube.com/results?search_query='))).toBe(false);
+  });
 });

@@ -81,8 +81,8 @@ export const homeNs: LocaleNs = {
     'home.community.partnersLabel': 'Con el apoyo de',
     'home.community.quoteOf': 'Testimonio de {name}',
     'home.social.kicker': 'Ideas en movimiento',
-    'home.social.title': 'La conversación continúa en nuestras redes.',
-    'home.social.youtubeCta': 'Ver canal y conversaciones',
+    'home.social.title': 'Sigue a Allerihe, founder de Quonceptory, en sus redes personales.',
+    'home.social.youtubeCta': 'Conoce su canal y sus conversaciones',
     'home.events.title': 'Lo próximo en el calendario',
     'home.events.desc':
       'Webinars, talleres y hackathons abiertos. Entra por una sesión suelta o quédate para toda la ruta.',
@@ -188,8 +188,8 @@ export const homeNs: LocaleNs = {
     'home.community.partnersLabel': 'With the support of',
     'home.community.quoteOf': 'Testimonial from {name}',
     'home.social.kicker': 'Ideas in motion',
-    'home.social.title': 'The conversation continues across our channels.',
-    'home.social.youtubeCta': 'Explore the channel and conversations',
+    'home.social.title': 'Follow Allerihe, founder of Quonceptory, across his personal channels.',
+    'home.social.youtubeCta': 'Explore his channel and conversations',
     'home.events.title': 'What is next on the calendar',
     'home.events.desc':
       'Open webinars, workshops and hackathons. Drop in for a single session — or stay for the whole route.',

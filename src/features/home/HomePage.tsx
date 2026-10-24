@@ -474,7 +474,7 @@ export function HomePage() {
               <h2 className="mt-3 max-w-xl text-3xl font-extrabold md:text-5xl">{t('home.social.title')}</h2>
             </div>
             <a
-              href={`https://www.youtube.com/results?search_query=${encodeURIComponent('Founder - Allerihe')}`}
+              href={siteConfig.socials.find((social) => social.label === 'YouTube')?.href}
               target="_blank"
               rel="noreferrer"
               className="group relative flex min-h-48 items-end justify-between overflow-hidden rounded-2xl bg-[#d82424] p-6 text-white shadow-[0_12px_30px_rgb(80_0_0/0.18)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgb(80_0_0/0.26)] md:min-h-56 md:p-8"
@@ -485,7 +485,7 @@ export function HomePage() {
               />
               <div className="relative">
                 <p className="text-xs font-bold tracking-widest text-white/75 uppercase">YouTube</p>
-                <h3 className="mt-3 text-2xl font-extrabold md:text-4xl">Founder - Allerihe</h3>
+                <h3 className="mt-3 text-2xl font-extrabold md:text-4xl">Allerihe</h3>
                 <p className="mt-2 text-sm text-white/80">{t('home.social.youtubeCta')}</p>
               </div>
               <span className="relative flex size-12 shrink-0 items-center justify-center rounded-full bg-white text-[#d82424] shadow-lg transition-transform duration-300 group-hover:translate-x-1">
@@ -495,15 +495,11 @@ export function HomePage() {
           </div>
           <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {siteConfig.socials
-              .filter((social) => ['Instagram', 'TikTok', 'YouTube', 'LinkedIn', 'X'].includes(social.label))
+              .filter((social) => ['Instagram', 'TikTok', 'YouTube', 'LinkedIn'].includes(social.label))
               .map((social) => (
                 <a
                   key={social.label}
-                  href={
-                    social.label === 'YouTube'
-                      ? `https://www.youtube.com/results?search_query=${encodeURIComponent('Founder - Allerihe')}`
-                      : social.href
-                  }
+                  href={social.href}
                   target="_blank"
                   rel="noreferrer"
                   className="glass group hover:glass-strong flex min-h-16 items-center justify-between gap-3 rounded-xl px-4 transition-all duration-300 hover:-translate-y-1"
