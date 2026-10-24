@@ -21,7 +21,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
       onClick={toggleTheme}
       aria-label={isDark ? t('nav.themeToLight') : t('nav.themeToDark')}
       className={cn(
-        'grid size-10 shrink-0 place-items-center rounded-full border border-line text-ink-soft transition-colors duration-300 hover:border-line-strong hover:text-ink',
+        'border-line text-ink-soft hover:border-line-strong hover:text-ink grid size-10 shrink-0 place-items-center rounded-full border transition-colors duration-300',
         className,
       )}
     >

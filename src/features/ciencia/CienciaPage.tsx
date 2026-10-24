@@ -30,19 +30,61 @@ interface DomainCard {
 
 const DOMAIN_CARDS: Record<DomainKey, readonly DomainCard[]> = {
   cosmos: [
-    { titleKey: 'ciencia.cosmos.card1.title', descKey: 'ciencia.cosmos.card1.desc', factKey: 'ciencia.cosmos.card1.fact', image: IMAGES.blackHole },
-    { titleKey: 'ciencia.cosmos.card2.title', descKey: 'ciencia.cosmos.card2.desc', factKey: 'ciencia.cosmos.card2.fact', image: IMAGES.galaxy },
-    { titleKey: 'ciencia.cosmos.card3.title', descKey: 'ciencia.cosmos.card3.desc', factKey: 'ciencia.cosmos.card3.fact', image: IMAGES.sun },
+    {
+      titleKey: 'ciencia.cosmos.card1.title',
+      descKey: 'ciencia.cosmos.card1.desc',
+      factKey: 'ciencia.cosmos.card1.fact',
+      image: IMAGES.blackHole,
+    },
+    {
+      titleKey: 'ciencia.cosmos.card2.title',
+      descKey: 'ciencia.cosmos.card2.desc',
+      factKey: 'ciencia.cosmos.card2.fact',
+      image: IMAGES.galaxy,
+    },
+    {
+      titleKey: 'ciencia.cosmos.card3.title',
+      descKey: 'ciencia.cosmos.card3.desc',
+      factKey: 'ciencia.cosmos.card3.fact',
+      image: IMAGES.sun,
+    },
   ],
   vida: [
-    { titleKey: 'ciencia.vida.card1.title', descKey: 'ciencia.vida.card1.desc', factKey: 'ciencia.vida.card1.fact', image: IMAGES.reef },
-    { titleKey: 'ciencia.vida.card2.title', descKey: 'ciencia.vida.card2.desc', factKey: 'ciencia.vida.card2.fact', image: IMAGES.divers },
-    { titleKey: 'ciencia.vida.card3.title', descKey: 'ciencia.vida.card3.desc', factKey: 'ciencia.vida.card3.fact', image: IMAGES.turtle },
+    {
+      titleKey: 'ciencia.vida.card1.title',
+      descKey: 'ciencia.vida.card1.desc',
+      factKey: 'ciencia.vida.card1.fact',
+      image: IMAGES.reef,
+    },
+    {
+      titleKey: 'ciencia.vida.card2.title',
+      descKey: 'ciencia.vida.card2.desc',
+      factKey: 'ciencia.vida.card2.fact',
+      image: IMAGES.divers,
+    },
+    {
+      titleKey: 'ciencia.vida.card3.title',
+      descKey: 'ciencia.vida.card3.desc',
+      factKey: 'ciencia.vida.card3.fact',
+      image: IMAGES.turtle,
+    },
   ],
   materia: [
-    { titleKey: 'ciencia.materia.card1.title', descKey: 'ciencia.materia.card1.desc', factKey: 'ciencia.materia.card1.fact' },
-    { titleKey: 'ciencia.materia.card2.title', descKey: 'ciencia.materia.card2.desc', factKey: 'ciencia.materia.card2.fact' },
-    { titleKey: 'ciencia.materia.card3.title', descKey: 'ciencia.materia.card3.desc', factKey: 'ciencia.materia.card3.fact' },
+    {
+      titleKey: 'ciencia.materia.card1.title',
+      descKey: 'ciencia.materia.card1.desc',
+      factKey: 'ciencia.materia.card1.fact',
+    },
+    {
+      titleKey: 'ciencia.materia.card2.title',
+      descKey: 'ciencia.materia.card2.desc',
+      factKey: 'ciencia.materia.card2.fact',
+    },
+    {
+      titleKey: 'ciencia.materia.card3.title',
+      descKey: 'ciencia.materia.card3.desc',
+      factKey: 'ciencia.materia.card3.fact',
+    },
   ],
 };
 
@@ -55,22 +97,22 @@ function DomainSection({ domain, id }: { domain: DomainKey; id: string }) {
   return (
     <section
       id={id}
-      className={flip ? 'border-y border-line bg-glass-bg backdrop-blur-xl scroll-mt-24' : 'scroll-mt-24'}
+      className={flip ? 'border-line bg-glass-bg scroll-mt-24 border-y backdrop-blur-xl' : 'scroll-mt-24'}
     >
       <div className="shell py-20 md:py-28">
         <Reveal>
           <div className="flex items-center gap-3">
             <span className="glass inline-flex size-10 items-center justify-center rounded-full">
-              <Icon className="size-5 text-accent-500" aria-hidden="true" />
+              <Icon className="text-accent-500 size-5" aria-hidden="true" />
             </span>
-            <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted">
+            <span className="text-muted text-[11px] font-bold tracking-[0.18em] uppercase">
               {t(`ciencia.${domain}.kicker`)}
             </span>
           </div>
           <h2 className="mt-5 max-w-3xl text-3xl font-extrabold tracking-tight text-balance md:text-5xl">
             {t(`ciencia.${domain}.title`)}
           </h2>
-          <p className="mt-4 max-w-2xl text-ink-soft">{t(`ciencia.${domain}.desc`)}</p>
+          <p className="text-ink-soft mt-4 max-w-2xl">{t(`ciencia.${domain}.desc`)}</p>
         </Reveal>
 
         <StaggerContainer className="mt-12 grid gap-4 md:grid-cols-3">
@@ -78,7 +120,7 @@ function DomainSection({ domain, id }: { domain: DomainKey; id: string }) {
             <StaggerItem key={card.titleKey}>
               <SpotlightCard className="flex h-full flex-col overflow-hidden">
                 {card.image ? (
-                  <div className="relative aspect-[16/10] overflow-hidden border-b border-line">
+                  <div className="border-line relative aspect-[16/10] overflow-hidden border-b">
                     <img
                       src={card.image}
                       alt=""
@@ -86,13 +128,16 @@ function DomainSection({ domain, id }: { domain: DomainKey; id: string }) {
                       decoding="async"
                       className="h-full w-full object-cover transition-transform duration-700 ease-out hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" aria-hidden="true" />
+                    <div
+                      className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"
+                      aria-hidden="true"
+                    />
                   </div>
                 ) : null}
                 <div className="flex flex-1 flex-col p-6">
                   <h3 className="text-lg font-bold">{t(card.titleKey)}</h3>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{t(card.descKey)}</p>
-                  <p className="mt-5 border-t border-line pt-4 text-xs font-semibold text-accent-500">
+                  <p className="text-muted mt-3 flex-1 text-sm leading-relaxed">{t(card.descKey)}</p>
+                  <p className="border-line text-accent-500 mt-5 border-t pt-4 text-xs font-semibold">
                     {t(card.factKey)}
                   </p>
                 </div>
@@ -107,7 +152,10 @@ function DomainSection({ domain, id }: { domain: DomainKey; id: string }) {
 
 export function CienciaPage() {
   const { locale, t } = useLocale();
-  useMeta(t('ciencia.meta.title'), t('ciencia.meta.desc'));
+  useMeta(t('ciencia.meta.title'), {
+    description: t('ciencia.meta.desc'),
+    canonical: `/${locale}/ciencia`,
+  });
 
   return (
     <>
@@ -120,10 +168,10 @@ export function CienciaPage() {
 
       <Reveal className="shell pt-16">
         <blockquote className="glass grain relative mx-auto max-w-3xl overflow-hidden rounded-[2rem] p-10 text-center md:p-14">
-          <p className="text-2xl font-extrabold leading-snug tracking-tight text-balance md:text-4xl">
+          <p className="text-2xl leading-snug font-extrabold tracking-tight text-balance md:text-4xl">
             “{t('ciencia.quote')}”
           </p>
-          <footer className="mt-6 text-xs font-bold uppercase tracking-[0.3em] text-muted">
+          <footer className="text-muted mt-6 text-xs font-bold tracking-[0.3em] uppercase">
             — {t('ciencia.quoteBy')}
           </footer>
         </blockquote>
@@ -136,7 +184,7 @@ export function CienciaPage() {
       <section className="shell py-20 md:py-28">
         <Reveal className="glass relative overflow-hidden rounded-[2.5rem] p-8 md:p-14">
           <div
-            className="pointer-events-none absolute -top-24 -right-16 size-72 rounded-full bg-glow blur-3xl animate-float-slow"
+            className="bg-glow animate-float-slow pointer-events-none absolute -top-24 -right-16 size-72 rounded-full blur-3xl"
             aria-hidden="true"
           />
           <div className="relative max-w-3xl">
@@ -144,7 +192,7 @@ export function CienciaPage() {
             <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-balance md:text-5xl">
               {t('ciencia.cta.title')}
             </h2>
-            <p className="mt-5 max-w-2xl text-ink-soft">{t('ciencia.cta.desc')}</p>
+            <p className="text-ink-soft mt-5 max-w-2xl">{t('ciencia.cta.desc')}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <LinkButton to={`/${locale}/metodo`} size="lg">
                 {t('ciencia.cta.primary')} <ArrowRight className="size-4" aria-hidden="true" />

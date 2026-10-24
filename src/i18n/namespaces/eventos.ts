@@ -4,7 +4,8 @@ export const eventosNs: LocaleNs = {
   es: {
     'eventos.kicker': 'AGENDA',
     'eventos.title': 'Eventos',
-    'eventos.desc': 'Webinars, workshops, hackathons y meetups de la comunidad global de Quonceptory: método aplicado, en directo y en abierto.',
+    'eventos.desc':
+      'Webinars, workshops, hackathons y meetups de la comunidad global de Quonceptory: método aplicado, en directo y en abierto.',
     'eventos.upcomingKicker': 'Agenda abierta',
     'eventos.upcomingTitle': 'Próximos eventos',
     'eventos.upcomingDesc': 'Las siguientes sesiones en directo de la comunidad, con plazas limitadas.',
@@ -26,13 +27,15 @@ export const eventosNs: LocaleNs = {
     'eventos.showing': 'Mostrando {shown} de {total}',
     'eventos.empty': 'No hay eventos con este filtro.',
     'eventos.ctaTitle': '¿Quieres proponer un evento?',
-    'eventos.ctaDesc': 'Si tienes un tema, un reto o una comunidad con la que compartir, hablemos y lo encajamos en la agenda.',
+    'eventos.ctaDesc':
+      'Si tienes un tema, un reto o una comunidad con la que compartir, hablemos y lo encajamos en la agenda.',
     'eventos.ctaButton': 'Proponer evento',
   },
   en: {
     'eventos.kicker': 'AGENDA',
     'eventos.title': 'Events',
-    'eventos.desc': 'Webinars, workshops, hackathons and meetups of the global Quonceptory community: applied method, live and open.',
+    'eventos.desc':
+      'Webinars, workshops, hackathons and meetups of the global Quonceptory community: applied method, live and open.',
     'eventos.upcomingKicker': 'Open agenda',
     'eventos.upcomingTitle': 'Upcoming events',
     'eventos.upcomingDesc': 'The next live sessions of the community, with limited seats.',
@@ -54,7 +57,8 @@ export const eventosNs: LocaleNs = {
     'eventos.showing': 'Showing {shown} of {total}',
     'eventos.empty': 'No events match this filter.',
     'eventos.ctaTitle': 'Want to propose an event?',
-    'eventos.ctaDesc': 'If you have a topic, a challenge or a community to share it with, let us talk and fit it into the agenda.',
+    'eventos.ctaDesc':
+      'If you have a topic, a challenge or a community to share it with, let us talk and fit it into the agenda.',
     'eventos.ctaButton': 'Propose an event',
   },
 };

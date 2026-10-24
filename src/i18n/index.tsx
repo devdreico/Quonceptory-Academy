@@ -1,12 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { BiString, Locale } from '@/data/types';
 import { interpolate } from '@/lib/utils';
 
@@ -72,6 +64,8 @@ export function isLocale(value: string | null | undefined): value is Locale {
 
 export function detectLocale(): Locale {
   if (typeof window === 'undefined') return 'es';
+  const pathLocale = window.location.pathname.split('/')[1];
+  if (isLocale(pathLocale)) return pathLocale;
   const stored = window.localStorage.getItem(STORAGE_KEY);
   if (isLocale(stored)) return stored;
   const nav = window.navigator.language.slice(0, 2).toLowerCase();
@@ -115,7 +109,8 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
       if (isLocale(segments[1])) {
         segments[1] = other;
         return segments.join('/') || `/${other}`;
-      }      return `/${other}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
+      }
+      return `/${other}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
     },
     [locale],
   );

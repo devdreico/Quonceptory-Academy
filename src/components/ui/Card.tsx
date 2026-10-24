@@ -20,7 +20,7 @@ export function CardInteractive({ className, ...props }: CardInteractiveProps) {
   return (
     <div
       className={cn(
-        'glass cursor-pointer rounded-3xl transition-all duration-500 ease-out hover:-translate-y-1 hover:glass-strong',
+        'glass hover:glass-strong cursor-pointer rounded-3xl transition-all duration-500 ease-out hover:-translate-y-1',
         className,
       )}
       {...props}
@@ -32,12 +32,7 @@ export interface SpotlightCardProps extends HTMLAttributes<HTMLDivElement> {
   spotlightSize?: number;
 }
 
-export function SpotlightCard({
-  className,
-  spotlightSize = 420,
-  children,
-  ...props
-}: SpotlightCardProps) {
+export function SpotlightCard({ className, spotlightSize = 420, children, ...props }: SpotlightCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState({ x: 0, y: 0, active: false });
 
@@ -53,7 +48,7 @@ export function SpotlightCard({
       onMouseMove={handleMove}
       onMouseLeave={() => setPos((prev) => ({ ...prev, active: false }))}
       className={cn(
-        'glass group relative overflow-hidden rounded-3xl transition-all duration-500 ease-out hover:-translate-y-1 hover:glass-strong',
+        'glass group hover:glass-strong relative overflow-hidden rounded-3xl transition-all duration-500 ease-out hover:-translate-y-1',
         className,
       )}
       {...props}

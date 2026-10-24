@@ -39,13 +39,15 @@ export const metodoNs: LocaleNs = {
     'metodo.principles.desc':
       'Cuatro convicciones que atraviesan cada programa, taller y proyecto de la academia.',
     'metodo.principle1.title': 'Duda con evidencia',
-    'metodo.principle1.desc': 'Toda afirmación se sostiene con datos o se retira. La intuición propone; la evidencia dispone.',
+    'metodo.principle1.desc':
+      'Toda afirmación se sostiene con datos o se retira. La intuición propone; la evidencia dispone.',
     'metodo.principle2.title': 'Método antes que herramienta',
     'metodo.principle2.desc': 'Las herramientas cambian cada trimestre. El método de delimitar y medir, no.',
     'metodo.principle3.title': 'Entregables, no diapositivas',
     'metodo.principle3.desc': 'Cada fase termina en algo que se puede ejecutar, revisar o desplegar.',
     'metodo.principle4.title': 'Comunidad como laboratorio',
-    'metodo.principle4.desc': 'Los proyectos se defienden ante la comunidad: pares que revisan, corrigen y exigen números.',
+    'metodo.principle4.desc':
+      'Los proyectos se defienden ante la comunidad: pares que revisan, corrigen y exigen números.',
     'metodo.final.kicker': 'Siguiente paso',
     'metodo.final.title': 'Aplica el método a tu problema real',
     'metodo.final.desc':
@@ -91,13 +93,15 @@ export const metodoNs: LocaleNs = {
     'metodo.principles.desc':
       'Four convictions that run through every program, workshop and project at the academy.',
     'metodo.principle1.title': 'Doubt with evidence',
-    'metodo.principle1.desc': 'Every claim stands on data or gets withdrawn. Intuition proposes; evidence decides.',
+    'metodo.principle1.desc':
+      'Every claim stands on data or gets withdrawn. Intuition proposes; evidence decides.',
     'metodo.principle2.title': 'Method before tooling',
     'metodo.principle2.desc': 'Tools change every quarter. The method of defining and measuring does not.',
     'metodo.principle3.title': 'Deliverables, not slides',
     'metodo.principle3.desc': 'Every phase ends in something you can run, review or deploy.',
     'metodo.principle4.title': 'Community as laboratory',
-    'metodo.principle4.desc': 'Projects are defended before the community: peers who review, correct and demand numbers.',
+    'metodo.principle4.desc':
+      'Projects are defended before the community: peers who review, correct and demand numbers.',
     'metodo.final.kicker': 'Next step',
     'metodo.final.title': 'Apply the method to your real problem',
     'metodo.final.desc':

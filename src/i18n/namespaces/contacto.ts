@@ -30,8 +30,7 @@ export const contactoNs: LocaleNs = {
     'contacto.form.topic.otro': 'Otro',
     'contacto.form.message': 'Mensaje',
     'contacto.form.messagePlaceholder': 'Describe brevemente tu proyecto o tu pregunta…',
-    'contacto.form.consent':
-      'Acepto que Quonceptory use estos datos para responder a mi consulta.',
+    'contacto.form.consent': 'Acepto que Quonceptory use estos datos para responder a mi consulta.',
     'contacto.form.submit': 'Enviar mensaje',
     'contacto.form.errorName': 'Indica tu nombre.',
     'contacto.form.errorEmail': 'Indica tu email.',
@@ -42,6 +41,14 @@ export const contactoNs: LocaleNs = {
     'contacto.form.successDesc':
       'Se abrirá tu aplicación de correo con el mensaje listo. Revísalo y envíalo para completar la consulta.',
     'contacto.form.sendAnother': 'Enviar otro mensaje',
+    'contacto.form.openEmail': 'Abrir aplicación de correo',
+    'contacto.form.demoNote':
+      'Esta demo prepara un correo en tu dispositivo. Este sitio no envía ni almacena el mensaje.',
+    'contacto.mail.subject': 'Consulta desde la web',
+    'contacto.mail.name': 'Nombre',
+    'contacto.mail.email': 'Correo',
+    'contacto.mail.profile': 'Perfil',
+    'contacto.mail.topic': 'Tema',
     'contacto.cards.email': 'Email general',
     'contacto.cards.admissions': 'Admisiones',
     'contacto.cards.admissionsDesc': 'Becas, matrículas y proceso de admisión.',
@@ -98,8 +105,7 @@ export const contactoNs: LocaleNs = {
     'contacto.form.topic.otro': 'Other',
     'contacto.form.message': 'Message',
     'contacto.form.messagePlaceholder': 'Briefly describe your project or question…',
-    'contacto.form.consent':
-      'I agree that Quonceptory may use this data to reply to my enquiry.',
+    'contacto.form.consent': 'I agree that Quonceptory may use this data to reply to my enquiry.',
     'contacto.form.submit': 'Send message',
     'contacto.form.errorName': 'Please enter your name.',
     'contacto.form.errorEmail': 'Please enter your email.',
@@ -110,6 +116,14 @@ export const contactoNs: LocaleNs = {
     'contacto.form.successDesc':
       'Your email app will open with the message ready. Review and send it to complete your enquiry.',
     'contacto.form.sendAnother': 'Send another message',
+    'contacto.form.openEmail': 'Open email app',
+    'contacto.form.demoNote':
+      'This demo prepares an email on your device. The message is not sent or stored by this website.',
+    'contacto.mail.subject': 'Website enquiry',
+    'contacto.mail.name': 'Name',
+    'contacto.mail.email': 'Email',
+    'contacto.mail.profile': 'Profile',
+    'contacto.mail.topic': 'Topic',
     'contacto.cards.email': 'General email',
     'contacto.cards.admissions': 'Admissions',
     'contacto.cards.admissionsDesc': 'Scholarships, enrolment and the admission process.',

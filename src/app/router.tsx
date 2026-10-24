@@ -33,9 +33,7 @@ const BlogPostPage = lazy(() =>
 const ContactoPage = lazy(() =>
   import('@/features/contacto/ContactoPage').then((m) => ({ default: m.ContactoPage })),
 );
-const LoginPage = lazy(() =>
-  import('@/features/auth/LoginPage').then((m) => ({ default: m.LoginPage })),
-);
+const LoginPage = lazy(() => import('@/features/auth/LoginPage').then((m) => ({ default: m.LoginPage })));
 const AppPage = lazy(() => import('@/features/auth/app/AppPage').then((m) => ({ default: m.AppPage })));
 const NotFoundPage = lazy(() =>
   import('@/features/notfound/NotFoundPage').then((m) => ({ default: m.NotFoundPage })),
@@ -44,7 +42,7 @@ const NotFoundPage = lazy(() =>
 function PageFallback() {
   return (
     <div className="shell flex min-h-[60vh] items-center justify-center">
-      <div className="h-10 w-10 animate-spin-slow rounded-full border-2 border-line border-t-accent-500" />
+      <div className="animate-spin-slow border-line border-t-accent-500 h-10 w-10 rounded-full border-2" />
     </div>
   );
 }

@@ -35,7 +35,7 @@ export const toolsResearch: Tool[] = [
     name: 'Semantic Scholar',
     desc: {
       es: 'Buscador gratuito del Allen Institute con resúmenes de IA y citas con contexto.',
-      en: "Free Allen Institute search with AI-generated summaries and context-rich citations.",
+      en: 'Free Allen Institute search with AI-generated summaries and context-rich citations.',
     },
     category: 'research',
     type: 'open',

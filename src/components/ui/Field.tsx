@@ -14,26 +14,15 @@ export interface FieldProps {
   className?: string;
 }
 
-export function Field({
-  label,
-  id,
-  error,
-  hint,
-  required = false,
-  children,
-  className,
-}: FieldProps) {
+export function Field({ label, id, error, hint, required = false, children, className }: FieldProps) {
   return (
     <div className={cn('space-y-2', className)}>
-      <label
-        htmlFor={id}
-        className="block text-[11px] font-bold uppercase tracking-wider text-muted"
-      >
+      <label htmlFor={id} className="text-muted block text-[11px] font-bold tracking-wider uppercase">
         {label}
-        {required ? <span className="ml-1 text-accent-500">*</span> : null}
+        {required ? <span className="text-accent-500 ml-1">*</span> : null}
       </label>
       {children}
-      {hint && !error ? <p className="text-xs text-muted">{hint}</p> : null}
+      {hint && !error ? <p className="text-muted text-xs">{hint}</p> : null}
       {error ? <p className="text-xs font-medium text-red-500">{error}</p> : null}
     </div>
   );

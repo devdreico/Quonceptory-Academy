@@ -16,7 +16,10 @@ const PRINCIPLES = [1, 2, 3, 4] as const;
 export function MetodoPage() {
   const { locale, t } = useLocale();
   const reduced = useReducedMotion();
-  useMeta(t('metodo.meta.title'), t('metodo.meta.desc'));
+  useMeta(t('metodo.meta.title'), {
+    description: t('metodo.meta.desc'),
+    canonical: `/${locale}/metodo`,
+  });
 
   const timelineRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -27,25 +30,20 @@ export function MetodoPage() {
 
   return (
     <>
-      <PageHeader
-        index="02"
-        kicker={t('metodo.kicker')}
-        title={t('metodo.title')}
-        desc={t('metodo.desc')}
-      />
+      <PageHeader index="02" kicker={t('metodo.kicker')} title={t('metodo.title')} desc={t('metodo.desc')} />
 
       <section className="shell py-16 md:py-20">
-        <p className="mb-12 text-center text-xs font-bold uppercase tracking-[0.18em] text-muted">
+        <p className="text-muted mb-12 text-center text-xs font-bold tracking-[0.18em] uppercase">
           {t('metodo.timelineLabel')}
         </p>
 
         <div ref={timelineRef} className="relative">
           <div
-            className="absolute top-2 bottom-2 left-5 w-px bg-line md:left-1/2 md:-translate-x-1/2"
+            className="bg-line absolute top-2 bottom-2 left-5 w-px md:left-1/2 md:-translate-x-1/2"
             aria-hidden="true"
           >
             <motion.div
-              className="w-full origin-top bg-accent-500"
+              className="bg-accent-500 w-full origin-top"
               style={{ height: reduced ? '100%' : progressHeight }}
             />
           </div>
@@ -62,12 +60,12 @@ export function MetodoPage() {
                   )}
                 >
                   <span
-                    className="absolute top-8 left-5 size-3 -translate-x-1/2 rounded-full bg-accent-500 ring-4 ring-bg md:left-0 md:translate-x-[-42%] md:size-3.5"
+                    className="bg-accent-500 ring-bg absolute top-8 left-5 size-3 -translate-x-1/2 rounded-full ring-4 md:left-0 md:size-3.5 md:translate-x-[-42%]"
                     aria-hidden="true"
                   />
                   <span
                     className={cn(
-                      'absolute top-2.5 hidden h-px bg-line-strong md:block',
+                      'bg-line-strong absolute top-2.5 hidden h-px md:block',
                       onRight ? 'right-[-2.5rem] w-10' : 'left-[-2.5rem] w-10',
                     )}
                     aria-hidden="true"
@@ -75,22 +73,22 @@ export function MetodoPage() {
                   <Reveal delay={0.05}>
                     <SpotlightCard className="p-7 md:p-8">
                       <div className="flex items-center gap-3">
-                        <span className="glass inline-flex size-9 items-center justify-center rounded-full font-mono text-xs font-bold text-accent-500">
+                        <span className="glass text-accent-500 inline-flex size-9 items-center justify-center rounded-full font-mono text-xs font-bold">
                           {String(phase).padStart(2, '0')}
                         </span>
-                        <span className="h-px flex-1 bg-line" aria-hidden="true" />
+                        <span className="bg-line h-px flex-1" aria-hidden="true" />
                       </div>
                       <h2 className="mt-5 text-2xl font-extrabold tracking-tight md:text-3xl">
                         {t(`metodo.phase${phase}.title`)}
                       </h2>
-                      <p className="mt-4 text-sm leading-relaxed text-ink-soft">
+                      <p className="text-ink-soft mt-4 text-sm leading-relaxed">
                         {t(`metodo.phase${phase}.desc`)}
                       </p>
                       <ul className="mt-6 space-y-2.5">
                         {([1, 2, 3] as const).map((bullet) => (
-                          <li key={bullet} className="flex items-start gap-2.5 text-sm text-muted">
-                            <span className="mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-accent-500/10">
-                              <Check className="size-2.5 text-accent-500" aria-hidden="true" />
+                          <li key={bullet} className="text-muted flex items-start gap-2.5 text-sm">
+                            <span className="bg-accent-500/10 mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-full">
+                              <Check className="text-accent-500 size-2.5" aria-hidden="true" />
                             </span>
                             {t(`metodo.phase${phase}.b${bullet}`)}
                           </li>
@@ -105,26 +103,24 @@ export function MetodoPage() {
         </div>
       </section>
 
-      <section className="border-y border-line bg-glass-bg backdrop-blur-xl">
+      <section className="border-line bg-glass-bg border-y backdrop-blur-xl">
         <div className="shell py-20 md:py-28">
           <Reveal>
-            <p className="text-xs font-bold uppercase tracking-widest text-accent-500">
+            <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">
               {t('metodo.principles.kicker')}
             </p>
             <h2 className="mt-3 text-3xl font-extrabold tracking-tight md:text-5xl">
               {t('metodo.principles.title')}
             </h2>
-            <p className="mt-4 max-w-2xl text-ink-soft">{t('metodo.principles.desc')}</p>
+            <p className="text-ink-soft mt-4 max-w-2xl">{t('metodo.principles.desc')}</p>
           </Reveal>
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {PRINCIPLES.map((index) => (
               <Reveal key={index} delay={index * 0.06}>
                 <SpotlightCard className="h-full p-6">
-                  <p className="font-mono text-xs text-accent-500">
-                    {String(index).padStart(2, '0')}
-                  </p>
+                  <p className="text-accent-500 font-mono text-xs">{String(index).padStart(2, '0')}</p>
                   <h3 className="mt-4 font-bold">{t(`metodo.principle${index}.title`)}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">
+                  <p className="text-muted mt-2 text-sm leading-relaxed">
                     {t(`metodo.principle${index}.desc`)}
                   </p>
                 </SpotlightCard>
@@ -137,17 +133,17 @@ export function MetodoPage() {
       <section className="shell py-20 md:py-28">
         <Reveal className="glass grain relative overflow-hidden rounded-[2.5rem] p-8 md:p-14">
           <div
-            className="pointer-events-none absolute -bottom-28 -left-16 size-72 rounded-full bg-glow blur-3xl animate-float"
+            className="bg-glow animate-float pointer-events-none absolute -bottom-28 -left-16 size-72 rounded-full blur-3xl"
             aria-hidden="true"
           />
           <div className="relative max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-widest text-accent-500">
+            <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">
               {t('metodo.final.kicker')}
             </p>
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-balance md:text-5xl">
               {t('metodo.final.title')}
             </h2>
-            <p className="mt-5 max-w-2xl text-ink-soft">{t('metodo.final.desc')}</p>
+            <p className="text-ink-soft mt-5 max-w-2xl">{t('metodo.final.desc')}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <LinkButton to={`/${locale}/contacto`} size="lg">
                 {t('metodo.final.ctaPrimary')}

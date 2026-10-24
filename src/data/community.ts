@@ -394,7 +394,10 @@ export const faqs: FaqItem[] = [
   },
   {
     id: 'fq-07',
-    q: { es: '¿La formación es válida fuera de mi país?', en: 'Is the training recognized outside my country?' },
+    q: {
+      es: '¿La formación es válida fuera de mi país?',
+      en: 'Is the training recognized outside my country?',
+    },
     a: {
       es: 'Nuestros alumnos están en 40 países y los certificados son aceptados por equipos de producto e ingeniería de empresas multinacionales. No sustituyen títulos universitarios oficiales.',
       en: 'Our students span 40 countries and certificates are accepted by product and engineering teams in multinational companies. They do not replace official university degrees.',
@@ -434,7 +437,10 @@ export const faqs: FaqItem[] = [
   },
   {
     id: 'fq-12',
-    q: { es: '¿Todo es online o hay clases presenciales?', en: 'Is everything online or are there in-person classes?' },
+    q: {
+      es: '¿Todo es online o hay clases presenciales?',
+      en: 'Is everything online or are there in-person classes?',
+    },
     a: {
       es: 'El 80 % es online en directo o a tu ritmo. Organizamos además encuentros presenciales en Madrid, Barcelona, Ciudad de México, Bogotá, Buenos Aires y Lisboa.',
       en: 'Eighty percent is online, live or on demand. We also run in-person gatherings in Madrid, Barcelona, Mexico City, Bogotá, Buenos Aires and Lisbon.',

@@ -4,7 +4,10 @@ export const events: EventItem[] = [
   {
     id: 'ev-01',
     slug: 'webinar-contratos-de-agentes-en-produccion',
-    title: { es: 'Webinar: contratos de agentes en producción', en: 'Webinar: agent contracts in production' },
+    title: {
+      es: 'Webinar: contratos de agentes en producción',
+      en: 'Webinar: agent contracts in production',
+    },
     desc: {
       es: 'Cómo versionar herramientas, permisos y logs de un agente para que un cambio de prompt no rompa el sistema.',
       en: 'How to version tools, permissions and agent logs so a prompt change does not break the system.',
@@ -18,7 +21,10 @@ export const events: EventItem[] = [
   {
     id: 'ev-02',
     slug: 'clinica-de-prompts-madrid',
-    title: { es: 'Clínica de Prompts: trae tus prompts rotos', en: 'Prompt Clinic: bring your broken prompts' },
+    title: {
+      es: 'Clínica de Prompts: trae tus prompts rotos',
+      en: 'Prompt Clinic: bring your broken prompts',
+    },
     desc: {
       es: 'Taller práctico donde revisamos en vivo prompts de asistentes y automatizaciones de los asistentes.',
       en: 'Hands-on session where we review the prompts behind attendees assistants and automations, live.',
@@ -410,7 +416,10 @@ export const events: EventItem[] = [
   {
     id: 'ev-30',
     slug: 'webinar-empieza-2026-con-ia',
-    title: { es: 'Webinar: empieza 2026 con IA bien aplicada', en: 'Webinar: start 2026 with well-applied AI' },
+    title: {
+      es: 'Webinar: empieza 2026 con IA bien aplicada',
+      en: 'Webinar: start 2026 with well-applied AI',
+    },
     desc: {
       es: 'Priorización de casos de uso, métricas de éxito y calendario realista de adopción para equipos.',
       en: 'Use-case prioritization, success metrics and a realistic adoption calendar for teams.',

@@ -25,11 +25,13 @@ export const homeNs: LocaleNs = {
     'home.method.desc':
       'Cuatro fases que convierten un problema mal planteado en un resultado que se puede usar, medir y escalar. Este es el hilo que recorre cada programa de la academia.',
     'home.method.phasesLabel': 'Fases del método',
+    'home.method.systemStatus': 'Sistema en evolución',
     'home.tracks.title': 'Diez tracks, un solo hilo conductor',
     'home.tracks.desc':
       'Rutas completas de principio a fin: desde los fundamentos hasta investigación puntera. Elige por donde duele hoy tu trabajo y avanza con estructura.',
     'home.tracks.hours': '{count} h',
     'home.tracks.topics': '{count} temas',
+    'home.tracks.phase': 'Fase {phase}',
     'home.tracks.viewAll': 'Ver toda la academia',
     'home.tools.title': 'El stack que sí se usa',
     'home.tools.desc':
@@ -61,6 +63,9 @@ export const homeNs: LocaleNs = {
     'home.community.cta': 'Unirme a la comunidad',
     'home.community.partnersLabel': 'Con el apoyo de',
     'home.community.quoteOf': 'Testimonio de {name}',
+    'home.social.kicker': 'Ideas en movimiento',
+    'home.social.title': 'La conversación continúa en nuestras redes.',
+    'home.social.youtubeCta': 'Ver canal y conversaciones',
     'home.events.title': 'Lo próximo en el calendario',
     'home.events.desc':
       'Webinars, talleres y hackathons abiertos. Entra por una sesión suelta o quédate para toda la ruta.',
@@ -68,6 +73,7 @@ export const homeNs: LocaleNs = {
     'home.events.inPerson': 'Presencial',
     'home.events.seats': '{count} plazas',
     'home.events.viewAll': 'Ver todos los eventos',
+    'home.events.empty': 'Estamos preparando los próximos eventos.',
     'home.eventType.webinar': 'Webinar',
     'home.eventType.workshop': 'Taller',
     'home.eventType.hackathon': 'Hackathon',
@@ -109,11 +115,13 @@ export const homeNs: LocaleNs = {
     'home.method.desc':
       'Four phases that turn a badly framed problem into something you can actually use, measure and scale. This thread runs through every program we teach.',
     'home.method.phasesLabel': 'Method phases',
+    'home.method.systemStatus': 'Evolving system',
     'home.tracks.title': 'Ten tracks, one through-line',
     'home.tracks.desc':
       'Full routes from first principles to frontier research. Pick where work hurts today and move forward with structure instead of tabs.',
     'home.tracks.hours': '{count} h',
     'home.tracks.topics': '{count} topics',
+    'home.tracks.phase': 'Phase {phase}',
     'home.tracks.viewAll': 'View the full academy',
     'home.tools.title': 'The stack that actually gets used',
     'home.tools.desc':
@@ -145,6 +153,9 @@ export const homeNs: LocaleNs = {
     'home.community.cta': 'Join the community',
     'home.community.partnersLabel': 'With the support of',
     'home.community.quoteOf': 'Testimonial from {name}',
+    'home.social.kicker': 'Ideas in motion',
+    'home.social.title': 'The conversation continues across our channels.',
+    'home.social.youtubeCta': 'Explore the channel and conversations',
     'home.events.title': 'What is next on the calendar',
     'home.events.desc':
       'Open webinars, workshops and hackathons. Drop in for a single session — or stay for the whole route.',
@@ -152,6 +163,7 @@ export const homeNs: LocaleNs = {
     'home.events.inPerson': 'In person',
     'home.events.seats': '{count} seats',
     'home.events.viewAll': 'View all events',
+    'home.events.empty': 'We are preparing the next events.',
     'home.eventType.webinar': 'Webinar',
     'home.eventType.workshop': 'Workshop',
     'home.eventType.hackathon': 'Hackathon',

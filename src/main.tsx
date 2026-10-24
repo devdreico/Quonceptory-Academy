@@ -5,6 +5,7 @@ import { router } from '@/app/router';
 import { ThemeProvider } from '@/theme/ThemeProvider';
 import { LocaleProvider } from '@/i18n';
 import { AuthProvider } from '@/auth/AuthProvider';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import '@/index.css';
 
 createRoot(document.getElementById('root')!).render(
@@ -12,7 +13,9 @@ createRoot(document.getElementById('root')!).render(
     <ThemeProvider>
       <AuthProvider>
         <LocaleProvider>
-          <RouterProvider router={router} />
+          <ErrorBoundary>
+            <RouterProvider router={router} />
+          </ErrorBoundary>
         </LocaleProvider>
       </AuthProvider>
     </ThemeProvider>

@@ -116,24 +116,17 @@ export function Header() {
     <>
       <header
         className={cn(
-          'sticky top-0 z-50 border-b border-line bg-bg/60 backdrop-blur-2xl backdrop-saturate-180 transition-all duration-300',
-          scrolled &&
-            'bg-bg/80 shadow-[0_1px_0_0_var(--q-glass-line),0_12px_40px_-16px_rgb(0_0_0/0.25)]',
+          'border-line bg-bg/60 sticky top-0 z-50 border-b backdrop-blur-2xl backdrop-saturate-180 transition-all duration-300',
+          scrolled && 'bg-bg/80 shadow-[0_1px_0_0_var(--q-glass-line),0_12px_40px_-16px_rgb(0_0_0/0.25)]',
         )}
       >
         <div className="shell flex h-16 items-center justify-between gap-4 md:h-18">
-          <Link
-            to={`/${locale}`}
-            className="flex shrink-0 items-center gap-2.5"
-            aria-label={t('nav.home')}
-          >
+          <Link to={`/${locale}`} className="flex shrink-0 items-center gap-2.5" aria-label={t('nav.home')}>
             <Logo size={36} />
-            <span className="hidden text-sm font-extrabold tracking-tight sm:inline">
-              Quonceptory
-            </span>
+            <span className="hidden text-sm font-extrabold tracking-tight sm:inline">Quonceptory</span>
           </Link>
 
-          <nav className="hidden items-center lg:flex" aria-label="Primary">
+          <nav className="hidden items-center lg:flex" aria-label={t('a11y.primaryNav')}>
             {NAV_ITEMS.map((item) => {
               const hasChildren = Boolean(item.children?.length);
               const isOpen = openMenu === item.path;
@@ -167,11 +160,9 @@ export function Header() {
                           {isActive ? (
                             <motion.span
                               layoutId="nav-indicator"
-                              className="absolute inset-x-2.5 bottom-0 h-0.5 rounded-full bg-accent-500"
+                              className="bg-accent-500 absolute inset-x-2.5 bottom-0 h-0.5 rounded-full"
                               transition={
-                                reduced
-                                  ? { duration: 0 }
-                                  : { type: 'spring', bounce: 0.15, duration: 0.6 }
+                                reduced ? { duration: 0 } : { type: 'spring', bounce: 0.15, duration: 0.6 }
                               }
                             />
                           ) : null}
@@ -183,14 +174,11 @@ export function Header() {
                         type="button"
                         aria-label={`${t(item.key)} ▾`}
                         aria-expanded={isOpen}
-                        className="rounded-full p-1 text-muted transition-colors duration-300 hover:text-ink"
+                        className="text-muted hover:text-ink rounded-full p-1 transition-colors duration-300"
                         onClick={() => setOpenMenu(isOpen ? null : item.path)}
                       >
                         <ChevronDown
-                          className={cn(
-                            'size-3.5 transition-transform duration-300',
-                            isOpen && 'rotate-180',
-                          )}
+                          className={cn('size-3.5 transition-transform duration-300', isOpen && 'rotate-180')}
                           aria-hidden="true"
                         />
                       </button>
@@ -204,7 +192,7 @@ export function Header() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={reduced ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }}
                         transition={{ duration: reduced ? 0.12 : 0.2, ease: EASE_OUT_EXPO }}
-                        className="absolute left-1/2 top-full z-50 mt-2.5 w-60 -translate-x-1/2"
+                        className="absolute top-full left-1/2 z-50 mt-2.5 w-60 -translate-x-1/2"
                       >
                         <div className="glass-strong overflow-hidden rounded-2xl p-1.5">
                           {item.children?.map((child) => (
@@ -212,12 +200,9 @@ export function Header() {
                               key={child.path}
                               to={`/${locale}/${child.path}`}
                               onClick={() => setOpenMenu(null)}
-                              className="flex items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-sm font-medium text-ink-soft transition-colors duration-200 hover:bg-accent-500/8 hover:text-ink"
+                              className="text-ink-soft hover:bg-accent-500/8 hover:text-ink flex items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-colors duration-200"
                             >
-                              <span
-                                className="size-1 rounded-full bg-accent-500/60"
-                                aria-hidden="true"
-                              />
+                              <span className="bg-accent-500/60 size-1 rounded-full" aria-hidden="true" />
                               {t(child.key)}
                             </Link>
                           ))}
@@ -260,9 +245,9 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduced ? { opacity: 0 } : { opacity: 0, y: -12 }}
             transition={{ duration: reduced ? 0.15 : 0.4, ease: EASE_OUT_EXPO }}
-            className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto border-t border-line bg-bg/85 backdrop-blur-2xl lg:hidden"
+            className="border-line bg-bg/85 fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto border-t backdrop-blur-2xl lg:hidden"
           >
-            <nav className="shell flex flex-col py-8" aria-label="Mobile">
+            <nav className="shell flex flex-col py-8" aria-label={t('a11y.mobileNav')}>
               {NAV_ITEMS.map((item, index) => (
                 <motion.div
                   key={item.path}
@@ -279,12 +264,12 @@ export function Header() {
                     onClick={() => setOpen(false)}
                     className={({ isActive }) =>
                       cn(
-                        'flex items-baseline gap-4 border-b border-line py-4 text-2xl font-extrabold tracking-tight transition-colors duration-300 sm:text-3xl',
+                        'border-line flex items-baseline gap-4 border-b py-4 text-2xl font-extrabold tracking-tight transition-colors duration-300 sm:text-3xl',
                         isActive ? 'text-ink' : 'text-ink-soft hover:text-ink',
                       )
                     }
                   >
-                    <span className="text-xs font-bold tracking-[0.2em] text-muted">
+                    <span className="text-muted text-xs font-bold tracking-[0.2em]">
                       {String(index + 1).padStart(2, '0')}
                     </span>
                     {t(item.key)}
@@ -294,9 +279,9 @@ export function Header() {
                       key={child.path}
                       to={`/${locale}/${child.path}`}
                       onClick={() => setOpen(false)}
-                      className="flex items-center gap-3 border-b border-line/60 py-3 pl-10 text-base font-semibold text-ink-soft transition-colors duration-300 hover:text-ink"
+                      className="border-line/60 text-ink-soft hover:text-ink flex items-center gap-3 border-b py-3 pl-10 text-base font-semibold transition-colors duration-300"
                     >
-                      <span className="size-1.5 rounded-full bg-accent-500/60" aria-hidden="true" />
+                      <span className="bg-accent-500/60 size-1.5 rounded-full" aria-hidden="true" />
                       {t(child.key)}
                     </Link>
                   ))}

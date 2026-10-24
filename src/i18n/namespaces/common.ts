@@ -24,6 +24,8 @@ export const commonNs: LocaleNs = {
     'nav.themeToLight': 'Cambiar a tema claro',
     'nav.themeToDark': 'Cambiar a tema oscuro',
     'nav.language': 'Cambiar idioma',
+    'a11y.primaryNav': 'Navegación principal',
+    'a11y.mobileNav': 'Navegación móvil',
     'footer.rights': 'Todos los derechos reservados.',
     'footer.tagline':
       'Academia de inteligencia artificial. Método, fuerza computacional y comunidad para resolver problemas reales.',
@@ -73,6 +75,9 @@ export const commonNs: LocaleNs = {
     'common.copyLink': 'Copiar enlace',
     'common.copied': 'Enlace copiado',
     'common.readMore': 'Leer más',
+    'common.retry': 'Reintentar',
+    'common.errorTitle': 'Algo ha fallado',
+    'a11y.skip': 'Saltar al contenido',
   },
   en: {
     'nav.home': 'Home',
@@ -97,6 +102,8 @@ export const commonNs: LocaleNs = {
     'nav.themeToLight': 'Switch to light theme',
     'nav.themeToDark': 'Switch to dark theme',
     'nav.language': 'Change language',
+    'a11y.primaryNav': 'Primary navigation',
+    'a11y.mobileNav': 'Mobile navigation',
     'footer.rights': 'All rights reserved.',
     'footer.tagline':
       'Artificial intelligence academy. Method, computational force and community to solve real-world problems.',
@@ -146,5 +153,8 @@ export const commonNs: LocaleNs = {
     'common.copyLink': 'Copy link',
     'common.copied': 'Link copied',
     'common.readMore': 'Read more',
+    'common.retry': 'Try again',
+    'common.errorTitle': 'Something went wrong',
+    'a11y.skip': 'Skip to content',
   },
 };

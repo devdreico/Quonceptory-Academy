@@ -294,7 +294,10 @@ export const programs: Program[] = [
   {
     id: 'p-020',
     slug: 'vision-por-computador-con-modelos-fundacionales',
-    title: { es: 'Visión por Computador con Modelos Fundacionales', en: 'Computer Vision with Foundation Models' },
+    title: {
+      es: 'Visión por Computador con Modelos Fundacionales',
+      en: 'Computer Vision with Foundation Models',
+    },
     desc: {
       es: 'Detección, segmentación y control de calidad visual sin entrenar redes desde cero.',
       en: 'Detection, segmentation and visual quality control without training networks from scratch.',
@@ -309,7 +312,10 @@ export const programs: Program[] = [
   {
     id: 'p-021',
     slug: 'agentes-con-codigo-automation-en-la-practica',
-    title: { es: 'Agentes con Código: Automation en la Práctica', en: 'Coding Agents: Automation in Practice' },
+    title: {
+      es: 'Agentes con Código: Automation en la Práctica',
+      en: 'Coding Agents: Automation in Practice',
+    },
     desc: {
       es: 'Agentes que leen, escriben y ejecutan código en sandboxes: seis semanas con casos de CI y datos.',
       en: 'Agents that read, write and execute code in sandboxes: six weeks of CI and data cases.',
@@ -445,7 +451,10 @@ export const programs: Program[] = [
   {
     id: 'p-030',
     slug: 'chatbots-y-asistentes-con-contexto-propio',
-    title: { es: 'Chatbots y Asistentes con Contexto Propio', en: 'Chatbots & Assistants with Your Own Context' },
+    title: {
+      es: 'Chatbots y Asistentes con Contexto Propio',
+      en: 'Chatbots & Assistants with Your Own Context',
+    },
     desc: {
       es: 'Entrada al RAG: monta un asistente que cite fuentes y diga cuando no lo sabe.',
       en: 'Entry into RAG: build an assistant that cites sources and admits when it does not know.',

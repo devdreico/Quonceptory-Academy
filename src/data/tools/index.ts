@@ -54,11 +54,10 @@ const categoryLabels: { id: string; label: BiString }[] = [
   { id: 'general', label: { es: 'Utilidades y Directorios', en: 'Utilities & Directories' } },
 ];
 
-export const toolCategories: { id: string; label: BiString; count?: number }[] =
-  categoryLabels.map((c) => ({
-    ...c,
-    count: allTools.filter((t) => t.category === c.id).length,
-  }));
+export const toolCategories: { id: string; label: BiString; count?: number }[] = categoryLabels.map((c) => ({
+  ...c,
+  count: allTools.filter((t) => t.category === c.id).length,
+}));
 
 export const toolTypeLabels: Record<ToolType, BiString> = {
   open: { es: 'Código abierto', en: 'Open source' },

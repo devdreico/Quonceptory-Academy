@@ -20,17 +20,17 @@ export function Accordion({ items, defaultOpen, className }: AccordionProps) {
   const reduced = useReducedMotion();
 
   return (
-    <div className={cn('border-y border-line', className)}>
+    <div className={cn('border-line border-y', className)}>
       {items.map((item) => {
         const isOpen = openId === item.id;
         return (
-          <div key={item.id} className="border-b border-line last:border-b-0">
+          <div key={item.id} className="border-line border-b last:border-b-0">
             <h3>
               <button
                 type="button"
                 aria-expanded={isOpen}
                 onClick={() => setOpenId(isOpen ? null : item.id)}
-                className="flex w-full items-center justify-between gap-6 py-5 text-left transition-colors duration-300 hover:text-accent-500"
+                className="hover:text-accent-500 flex w-full items-center justify-between gap-6 py-5 text-left transition-colors duration-300"
               >
                 <span className="text-base font-semibold md:text-lg">{item.title}</span>
                 <span
@@ -67,7 +67,7 @@ export function Accordion({ items, defaultOpen, className }: AccordionProps) {
                   }}
                   className="overflow-hidden"
                 >
-                  <div className="max-w-3xl pb-6 pr-10 text-sm leading-relaxed text-ink-soft">
+                  <div className="text-ink-soft max-w-3xl pr-10 pb-6 text-sm leading-relaxed">
                     {item.content}
                   </div>
                 </motion.div>

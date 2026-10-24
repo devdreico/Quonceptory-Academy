@@ -16,9 +16,7 @@ export function Logo({ size = 36, withWordmark = false, className }: LogoProps) 
         className="logo-negative shrink-0 object-contain"
         style={{ width: size, height: size }}
       />
-      {withWordmark ? (
-        <span className="font-extrabold tracking-tight">Quonceptory</span>
-      ) : null}
+      {withWordmark ? <span className="font-extrabold tracking-tight">Quonceptory</span> : null}
     </span>
   );
 }

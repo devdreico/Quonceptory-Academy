@@ -297,7 +297,10 @@ export const projects: Project[] = [
   {
     id: 'pj-018',
     slug: 'retroalimentacion-de-ensayos-con-calibracion-humana',
-    title: { es: 'Retroalimentación de ensayos con calibración humana', en: 'Essay feedback with human calibration' },
+    title: {
+      es: 'Retroalimentación de ensayos con calibración humana',
+      en: 'Essay feedback with human calibration',
+    },
     desc: {
       es: 'Comentarios sobre borradores alineados a la rúbrica del profesor, con muestreo semanal de calibración.',
       en: 'Feedback on drafts aligned to the teacher rubric, with weekly calibration sampling.',

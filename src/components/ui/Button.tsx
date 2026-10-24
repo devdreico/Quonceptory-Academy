@@ -10,8 +10,7 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   primary:
     'bg-accent-500 text-on-accent shadow-[0_1px_2px_rgb(0_0_0/0.08),0_10px_28px_-10px_rgb(0_0_0/0.45)] hover:bg-accent-600 hover:shadow-[0_2px_4px_rgb(0_0_0/0.1),0_16px_36px_-10px_rgb(0_0_0/0.5)]',
-  outline:
-    'glass text-ink hover:bg-accent-500/5 hover:border-line-strong hover:text-accent-500',
+  outline: 'glass text-ink hover:bg-accent-500/5 hover:border-line-strong hover:text-accent-500',
   ghost: 'hover:bg-accent-500/8',
   'accent-soft': 'bg-accent-500/10 text-accent-500 hover:bg-accent-500/20',
 };
@@ -38,16 +37,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  {
-    variant,
-    size,
-    loading = false,
-    disabled,
-    className,
-    children,
-    type = 'button',
-    ...props
-  },
+  { variant, size, loading = false, disabled, className, children, type = 'button', ...props },
   ref,
 ) {
   return (
@@ -69,8 +59,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   );
 });
 
-export interface LinkButtonProps
-  extends Omit<ComponentProps<typeof Link>, 'className' | 'to'> {
+export interface LinkButtonProps extends Omit<ComponentProps<typeof Link>, 'className' | 'to'> {
   to: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
@@ -96,9 +85,7 @@ export function LinkButton({
     loading && 'pointer-events-none opacity-80',
     className,
   );
-  const spinner = loading ? (
-    <Loader2 className="size-4 shrink-0 animate-spin" aria-hidden="true" />
-  ) : null;
+  const spinner = loading ? <Loader2 className="size-4 shrink-0 animate-spin" aria-hidden="true" /> : null;
 
   if (external) {
     return (

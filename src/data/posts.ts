@@ -4,7 +4,10 @@ export const posts: Post[] = [
   {
     id: 'b-01',
     slug: 'disenar-un-agente-que-no-se-pierda',
-    title: { es: 'Cómo diseñar un agente que no se pierda en la mitad de la tarea', en: 'How to design an agent that does not get lost halfway through' },
+    title: {
+      es: 'Cómo diseñar un agente que no se pierda en la mitad de la tarea',
+      en: 'How to design an agent that does not get lost halfway through',
+    },
     excerpt: {
       es: 'Los agentes fallan por deriva, no por falta de inteligencia. Un plan por etapas con artefactos observables evita que el modelo improvise.',
       en: 'Agents fail from drift, not from lack of intelligence. A staged plan with observable artifacts stops the model improvising.',
@@ -52,7 +55,10 @@ export const posts: Post[] = [
   {
     id: 'b-02',
     slug: 'subagentes-cuando-delegar-y-cuando-no',
-    title: { es: 'Subagentes: cuándo delegar y cuándo no', en: 'Subagents: when to delegate and when not to' },
+    title: {
+      es: 'Subagentes: cuándo delegar y cuándo no',
+      en: 'Subagents: when to delegate and when not to',
+    },
     excerpt: {
       es: 'Delegar en subagentes multiplica alcance y también coste. Tres criterios concretos para decidir dónde corta la jerarquía.',
       en: 'Delegating to subagents multiplies reach and cost too. Three concrete criteria for deciding where the hierarchy stops.',
@@ -95,7 +101,10 @@ export const posts: Post[] = [
   {
     id: 'b-03',
     slug: 'errores-de-produccion-en-agentes',
-    title: { es: 'Errores de producción en agentes: lecciones de doce despliegues', en: 'Production errors in agents: lessons from twelve deployments' },
+    title: {
+      es: 'Errores de producción en agentes: lecciones de doce despliegues',
+      en: 'Production errors in agents: lessons from twelve deployments',
+    },
     excerpt: {
       es: 'Doce despliegues, un patrón claro: los fallos no vienen del modelo, sino de datos de entrada, límites ausentes y tool calls mal tipadas.',
       en: 'Twelve deployments, one clear pattern: failures come from input data, missing limits and badly typed tool calls, not the model.',
@@ -142,7 +151,10 @@ export const posts: Post[] = [
   {
     id: 'b-04',
     slug: 'humanos-en-el-bucle-interruptor-de-seguridad',
-    title: { es: 'Humanos en el bucle: el interruptor de seguridad de tus agentes', en: 'Humans in the loop: your agent safety switch' },
+    title: {
+      es: 'Humanos en el bucle: el interruptor de seguridad de tus agentes',
+      en: 'Humans in the loop: your agent safety switch',
+    },
     excerpt: {
       es: 'La supervisión humana no es un freno al escalar: es el mecanismo que hace aceptable el escalar. Cómo diseñar los puntos de aprobación.',
       en: 'Human oversight is not a brake on scale: it is what makes scale acceptable. How to design the approval points.',
@@ -185,7 +197,10 @@ export const posts: Post[] = [
   {
     id: 'b-05',
     slug: 'del-chatbot-al-agente-cinco-saltos',
-    title: { es: 'Del chatbot al agente: cinco saltos que sí importan', en: 'From chatbot to agent: the five jumps that matter' },
+    title: {
+      es: 'Del chatbot al agente: cinco saltos que sí importan',
+      en: 'From chatbot to agent: the five jumps that matter',
+    },
     excerpt: {
       es: 'Un chatbot responde; un agente actúa. Entre ambos hay cinco decisiones de arquitectura, no una mejora gradual del prompt.',
       en: 'A chatbot answers; an agent acts. Between them sit five architectural decisions, not a gradual prompt improvement.',
@@ -228,7 +243,10 @@ export const posts: Post[] = [
   {
     id: 'b-06',
     slug: 'la-fase-que-todos-se-saltan-definir-el-punto-concreto',
-    title: { es: 'La fase que todos se saltan: definir el punto concreto', en: 'The phase everyone skips: defining the concrete starting point' },
+    title: {
+      es: 'La fase que todos se saltan: definir el punto concreto',
+      en: 'The phase everyone skips: defining the concrete starting point',
+    },
     excerpt: {
       es: 'El 70 % de los proyectos de IA fracasan por un problema mal planteado, no por el modelo. Cómo fijar el punto de partida antes de tocar código.',
       en: 'Seventy percent of AI projects fail on a badly framed problem, not the model. How to fix the starting point before touching code.',
@@ -276,7 +294,10 @@ export const posts: Post[] = [
   {
     id: 'b-07',
     slug: 'delegar-investigacion-preguntas-que-la-maquina-puede-atacar',
-    title: { es: 'Delegar investigación: plantear una pregunta que una máquina pueda atacar', en: 'Delegating research: framing a question a machine can attack' },
+    title: {
+      es: 'Delegar investigación: plantear una pregunta que una máquina pueda atacar',
+      en: 'Delegating research: framing a question a machine can attack',
+    },
     excerpt: {
       es: 'La investigación delegada funciona cuando la pregunta tiene forma de trabajo: fuentes, alcance y criterio de corte claros.',
       en: 'Delegated research works when the question has the shape of a job: clear sources, scope and stopping rule.',
@@ -319,7 +340,10 @@ export const posts: Post[] = [
   {
     id: 'b-08',
     slug: 'prototipos-medibles-define-el-numero-antes-de-codificar',
-    title: { es: 'Prototipos medibles: define el número antes de escribir código', en: 'Measurable prototypes: set the number before writing code' },
+    title: {
+      es: 'Prototipos medibles: define el número antes de escribir código',
+      en: 'Measurable prototypes: set the number before writing code',
+    },
     excerpt: {
       es: 'Si el criterio de éxito se define después del piloto, siempre gana la intuición de quien tiene más poder en la sala.',
       en: 'If the success criterion comes after the pilot, whoever holds the most power in the room always wins.',
@@ -366,7 +390,10 @@ export const posts: Post[] = [
   {
     id: 'b-09',
     slug: 'amplificar-de-un-piloto-a-un-proceso-de-equipo',
-    title: { es: 'Amplificar: de un piloto acomodado a un proceso de equipo', en: 'Amplifying: from a comfortable pilot to a team process' },
+    title: {
+      es: 'Amplificar: de un piloto acomodado a un proceso de equipo',
+      en: 'Amplifying: from a comfortable pilot to a team process',
+    },
     excerpt: {
       es: 'Un piloto que funciona y nadie adopta es un gasto elegante. La cuarta fase convierte la demo en rutina medible.',
       en: 'A working pilot nobody adopts is an elegant expense. Phase four turns the demo into a measurable routine.',
@@ -413,7 +440,10 @@ export const posts: Post[] = [
   {
     id: 'b-10',
     slug: 'chunking-no-es-un-hiperparametro',
-    title: { es: 'Chunking no es un hiperparámetro: es una decisión de producto', en: 'Chunking is not a hyperparameter: it is a product decision' },
+    title: {
+      es: 'Chunking no es un hiperparámetro: es una decisión de producto',
+      en: 'Chunking is not a hyperparameter: it is a product decision',
+    },
     excerpt: {
       es: 'El tamaño de tus fragmentos decide qué preguntas puede responder el sistema. Por eso pertenece a la hoja de ruta, no al tuning.',
       en: 'Your chunk size decides which questions the system can answer. That is why it belongs in roadmapping, not tuning.',
@@ -461,7 +491,10 @@ export const posts: Post[] = [
   {
     id: 'b-11',
     slug: 'metricas-de-recuperacion-que-predicen-satisfaccion',
-    title: { es: 'Métricas de recuperación que sí predicen la satisfacción', en: 'Retrieval metrics that actually predict satisfaction' },
+    title: {
+      es: 'Métricas de recuperación que sí predicen la satisfacción',
+      en: 'Retrieval metrics that actually predict satisfaction',
+    },
     excerpt: {
       es: 'Recall@10 no le importa a nadie fuera del equipo técnico. Estas cuatro métricas conectan la recuperación con lo que el usuario nota.',
       en: 'Nobody outside engineering cares about recall@10. These four metrics connect retrieval to what users actually feel.',
@@ -504,7 +537,10 @@ export const posts: Post[] = [
   {
     id: 'b-12',
     slug: 'series-temporales-con-llms-cuando-funciona-y-cuando-es-teatro',
-    title: { es: 'Series temporales con LLMs: cuándo funciona y cuándo es teatro', en: 'Time series with LLMs: when it works and when it is theater' },
+    title: {
+      es: 'Series temporales con LLMs: cuándo funciona y cuándo es teatro',
+      en: 'Time series with LLMs: when it works and when it is theater',
+    },
     excerpt: {
       es: 'Un LLM no compite con un modelo de previsión clásico en su terreno. Donde gana es en contexto, no en aritmética.',
       en: 'An LLM does not beat a classic forecaster on its own turf. Where it wins is context, not arithmetic.',
@@ -551,7 +587,10 @@ export const posts: Post[] = [
   {
     id: 'b-13',
     slug: 'privacidad-real-en-analisis-de-documentos-sensibles',
-    title: { es: 'Privacidad real en análisis de documentos sensibles', en: 'Real privacy when analyzing sensitive documents' },
+    title: {
+      es: 'Privacidad real en análisis de documentos sensibles',
+      en: 'Real privacy when analyzing sensitive documents',
+    },
     excerpt: {
       es: 'La pregunta no es si tu proveedor de modelos es fiable, sino si necesita ver los datos en absoluto. Cinco capas concretas.',
       en: 'The question is not whether your model vendor is trustworthy, but whether it needs to see the data at all. Five concrete layers.',
@@ -594,7 +633,10 @@ export const posts: Post[] = [
   {
     id: 'b-14',
     slug: 'como-evaluar-un-modelo-antes-de-creerte-el-benchmark',
-    title: { es: 'Cómo evalúas un modelo antes de creerte el benchmark del proveedor', en: 'How to evaluate a model before trusting a vendor benchmark' },
+    title: {
+      es: 'Cómo evalúas un modelo antes de creerte el benchmark del proveedor',
+      en: 'How to evaluate a model before trusting a vendor benchmark',
+    },
     excerpt: {
       es: 'Los benchmarks publicados miden tareas que probablemente no son la tuya. Con una tarde bien montada tienes evaluación propia.',
       en: 'Published benchmarks measure tasks that are probably not yours. With one well-built afternoon you get your own evaluation.',
@@ -697,7 +739,10 @@ export const posts: Post[] = [
   {
     id: 'b-16',
     slug: 'fine-tuning-con-lora-cuando-no-hacerlo',
-    title: { es: 'Fine-tuning con LoRA: la guía de cuándo NO hacerlo', en: 'LoRA fine-tuning: the guide to when not to do it' },
+    title: {
+      es: 'Fine-tuning con LoRA: la guía de cuándo NO hacerlo',
+      en: 'LoRA fine-tuning: the guide to when not to do it',
+    },
     excerpt: {
       es: 'El 80 % de los equipos que plantean fine-tuning deberían mejorar contexto o evaluación. Seis señales para esperar.',
       en: 'Eighty percent of teams considering fine-tuning should improve context or evaluation instead. Six signals to wait.',
@@ -748,7 +793,10 @@ export const posts: Post[] = [
   {
     id: 'b-17',
     slug: 'coste-de-llms-en-produccion-cinco-partidas',
-    title: { es: 'Coste de LLMs en producción: las cinco partidas que se te escapan', en: 'LLM cost in production: the five line items that escape you' },
+    title: {
+      es: 'Coste de LLMs en producción: las cinco partidas que se te escapan',
+      en: 'LLM cost in production: the five line items that escape you',
+    },
     excerpt: {
       es: 'El precio por millón de tokens es la cifra más visible y la menos importante. Dónde se va de verdad la factura.',
       en: 'Price per million tokens is the most visible figure and the least important. Where the bill actually goes.',
@@ -838,7 +886,10 @@ export const posts: Post[] = [
   {
     id: 'b-19',
     slug: 'reproducir-un-experimento-ajeno',
-    title: { es: 'Reproducir un experimento ajeno: la mejor escuela gratuita', en: 'Reproducing someone else experiment: the best free school' },
+    title: {
+      es: 'Reproducir un experimento ajeno: la mejor escuela gratuita',
+      en: 'Reproducing someone else experiment: the best free school',
+    },
     excerpt: {
       es: 'Repetir el resultado de otro equipo enseña más que cien tutoriales. Un método en cinco pasos para hacerlo sin volverte loco.',
       en: 'Reproducing another team results teaches more than a hundred tutorials. A five-step method that keeps you sane.',
@@ -881,7 +932,10 @@ export const posts: Post[] = [
   {
     id: 'b-20',
     slug: 'red-teaming-accesible-ataca-tu-sistema-antes',
-    title: { es: 'Red teaming accesible: cómo atacar tu propio sistema antes que lo haga otro', en: 'Accessible red teaming: how to attack your own system first' },
+    title: {
+      es: 'Red teaming accesible: cómo atacar tu propio sistema antes que lo haga otro',
+      en: 'Accessible red teaming: how to attack your own system first',
+    },
     excerpt: {
       es: 'No necesitas un laboratorio ni un experto en seguridad para empezar. Necesitas un catálogo, un equipo y una tarde.',
       en: 'You need no lab or security expert to start. You need a catalog, a team and an afternoon.',
@@ -928,7 +982,10 @@ export const posts: Post[] = [
   {
     id: 'b-21',
     slug: 'que-medimos-en-2000-profesionales-de-ia',
-    title: { es: 'Qué medimos en 2.000 profesionales de IA', en: 'What we measure across 2,000 AI professionals' },
+    title: {
+      es: 'Qué medimos en 2.000 profesionales de IA',
+      en: 'What we measure across 2,000 AI professionals',
+    },
     excerpt: {
       es: 'Tres años de datos de formación muestran un patrón incómodo: la brecha no está en herramientas, está en evaluación.',
       en: 'Three years of training data show an uncomfortable pattern: the gap is not in tools, it is in evaluation.',
@@ -975,7 +1032,10 @@ export const posts: Post[] = [
   {
     id: 'b-22',
     slug: 'hackathon-distribuido-nueve-zonas-horarias',
-    title: { es: 'Cómo organizamos un hackathon distribuido en nueve zonas horarias', en: 'How we run a distributed hackathon across nine time zones' },
+    title: {
+      es: 'Cómo organizamos un hackathon distribuido en nueve zonas horarias',
+      en: 'How we run a distributed hackathon across nine time zones',
+    },
     excerpt: {
       es: 'Un evento global funciona cuando el reloj deja de ser un problema logístico y pasa a ser una regla del juego explícita.',
       en: 'A global event works when the clock stops being a logistics problem and becomes an explicit rule of the game.',
@@ -1022,7 +1082,10 @@ export const posts: Post[] = [
   {
     id: 'b-23',
     slug: 'mentorias-que-funcionan-formato-de-45-minutos',
-    title: { es: 'Mentorías que funcionan: el formato de 45 minutos', en: 'Mentoring that works: the 45-minute format' },
+    title: {
+      es: 'Mentorías que funcionan: el formato de 45 minutos',
+      en: 'Mentoring that works: the 45-minute format',
+    },
     excerpt: {
       es: 'Cuarenta y cinco minutos con preparación obligatoria supera a sesiones largas sin agenda. Un guion que usamos cada semana.',
       en: 'Forty-five minutes with mandatory preparation beats long agenda-less sessions. A script we use weekly.',
@@ -1069,7 +1132,10 @@ export const posts: Post[] = [
   {
     id: 'b-24',
     slug: 'del-taller-corporativo-al-cambio-de-habitos',
-    title: { es: 'Del taller corporativo al cambio de hábitos', en: 'From corporate workshop to changed habits' },
+    title: {
+      es: 'Del taller corporativo al cambio de hábitos',
+      en: 'From corporate workshop to changed habits',
+    },
     excerpt: {
       es: 'Un taller inspira una tarde; un hábito dura años. Las cinco condiciones que convierten el evento en práctica de equipo.',
       en: 'A workshop inspires an afternoon; a habit lasts years. The five conditions that turn an event into team practice.',

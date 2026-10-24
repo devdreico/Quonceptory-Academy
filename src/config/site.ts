@@ -1,16 +1,10 @@
 import type { BiString } from '@/data/types';
 
-export type SocialIconName =
-  | 'instagram'
-  | 'tiktok'
-  | 'youtube'
-  | 'linkedin'
-  | 'x'
-  | 'github'
-  | 'discord';
+export type SocialIconName = 'instagram' | 'tiktok' | 'youtube' | 'linkedin' | 'x' | 'github' | 'discord';
 
 export const siteConfig = {
   name: 'Quonceptory',
+  url: 'https://quonceptory.com',
   fullName: { es: 'Quonceptory Academy', en: 'Quonceptory Academy' } satisfies BiString,
   tagline: {
     es: 'De un punto concreto a una solución aplicable. Inteligencia artificial con método.',

@@ -53,15 +53,15 @@ function DateBlock({ iso, locale, size = 'md' }: { iso: string; locale: Locale; 
     <div
       className={
         large
-          ? 'flex w-24 shrink-0 flex-col items-center justify-center rounded-2xl border border-line-strong bg-surface-2 py-5'
-          : 'flex w-16 shrink-0 flex-col items-center justify-center rounded-xl border border-line bg-surface-2 py-3'
+          ? 'border-line-strong bg-surface-2 flex w-24 shrink-0 flex-col items-center justify-center rounded-2xl border py-5'
+          : 'border-line bg-surface-2 flex w-16 shrink-0 flex-col items-center justify-center rounded-xl border py-3'
       }
     >
       <span
         className={
           large
-            ? 'text-4xl font-extrabold leading-none tracking-tight'
-            : 'text-xl font-extrabold leading-none tracking-tight'
+            ? 'text-4xl leading-none font-extrabold tracking-tight'
+            : 'text-xl leading-none font-extrabold tracking-tight'
         }
       >
         {day}
@@ -69,14 +69,14 @@ function DateBlock({ iso, locale, size = 'md' }: { iso: string; locale: Locale; 
       <span
         className={
           large
-            ? 'mt-1 text-[11px] font-bold uppercase tracking-[0.2em] text-accent-500'
-            : 'mt-0.5 text-[10px] font-bold uppercase tracking-[0.18em] text-muted'
+            ? 'text-accent-500 mt-1 text-[11px] font-bold tracking-[0.2em] uppercase'
+            : 'text-muted mt-0.5 text-[10px] font-bold tracking-[0.18em] uppercase'
         }
       >
         {month}
       </span>
       {large ? (
-        <span className="mt-2 flex items-center gap-1 text-[11px] font-semibold text-muted">
+        <span className="text-muted mt-2 flex items-center gap-1 text-[11px] font-semibold">
           <CalendarDays className="size-3" aria-hidden="true" />
           {time}
         </span>
@@ -89,7 +89,7 @@ function SeatsLabel({ seats, label, oneLabel }: { seats?: number; label: string;
   if (seats === undefined) return null;
   const text = seats === 1 ? oneLabel : label.replace('{count}', String(seats));
   return (
-    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted">
+    <span className="text-muted inline-flex items-center gap-1.5 text-xs font-semibold">
       <Users className="size-3.5" aria-hidden="true" />
       {text}
     </span>
@@ -117,7 +117,7 @@ function TypeBadge({
 function PlaceLine({ online, text }: { online: boolean; text: string }) {
   const Icon = online ? Wifi : MapPin;
   return (
-    <span className="inline-flex items-center gap-1.5 text-sm text-muted">
+    <span className="text-muted inline-flex items-center gap-1.5 text-sm">
       <Icon className="size-4 shrink-0" aria-hidden="true" />
       {text}
     </span>
@@ -129,7 +129,11 @@ export function EventosPage() {
   const [pastFilter, setPastFilter] = useState<PastFilter>('all');
   const [pastVisible, setPastVisible] = useState(PAGE_SIZE);
 
-  useMeta(`${t('eventos.title')} — Quonceptory Academy`, t('eventos.desc'));
+  useMeta(`${t('eventos.title')} — Quonceptory Academy`, {
+    description: t('eventos.desc'),
+    canonical: `/${locale}/eventos`,
+    type: 'event',
+  });
 
   const now = useMemo(() => Date.now(), []);
   const upcoming = useMemo(
@@ -187,7 +191,7 @@ export function EventosPage() {
           <Reveal>
             <Card className="grain relative overflow-hidden">
               <div
-                className="pointer-events-none absolute -top-24 -right-24 size-64 rounded-full bg-glow blur-3xl"
+                className="bg-glow pointer-events-none absolute -top-24 -right-24 size-64 rounded-full blur-3xl"
                 aria-hidden="true"
               />
               <div className="relative grid gap-8 p-6 md:grid-cols-[auto_1fr] md:p-10">
@@ -205,12 +209,10 @@ export function EventosPage() {
                   <h3 className="text-2xl font-extrabold tracking-tight text-balance md:text-4xl">
                     {tp(hero.title)}
                   </h3>
-                  <p className="max-w-2xl text-ink-soft">{tp(hero.desc)}</p>
+                  <p className="text-ink-soft max-w-2xl">{tp(hero.desc)}</p>
                   <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
                     <PlaceLine online={hero.online} text={tp(hero.location)} />
-                    <span className="text-sm font-semibold text-muted">
-                      {formatDate(hero.date, locale)}
-                    </span>
+                    <span className="text-muted text-sm font-semibold">{formatDate(hero.date, locale)}</span>
                   </div>
                   <div>
                     <LinkButton to={siteConfig.calendly} external variant="primary" size="lg">
@@ -241,7 +243,7 @@ export function EventosPage() {
                           </Badge>
                         ) : null}
                       </div>
-                      <h3 className="text-base font-bold leading-snug text-balance">{tp(event.title)}</h3>
+                      <h3 className="text-base leading-snug font-bold text-balance">{tp(event.title)}</h3>
                       <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1">
                         <PlaceLine online={event.online} text={tp(event.location)} />
                         <SeatsLabel
@@ -250,7 +252,7 @@ export function EventosPage() {
                           oneLabel={t('eventos.seatsOne')}
                         />
                       </div>
-                      <span className="text-xs font-semibold text-muted">
+                      <span className="text-muted text-xs font-semibold">
                         {formatDate(event.date, locale)}
                       </span>
                     </div>
@@ -262,7 +264,7 @@ export function EventosPage() {
         ) : null}
       </section>
 
-      <section className="border-y border-line bg-surface/50 py-16 md:py-24">
+      <section className="border-line bg-surface/50 border-y py-16 md:py-24">
         <div className="shell">
           <SectionHeading
             kicker={t('eventos.pastKicker')}
@@ -274,7 +276,7 @@ export function EventosPage() {
           <Reveal>
             <div className="flex flex-wrap items-center gap-4">
               <Tabs<PastFilter> tabs={tabs} value={pastFilter} onChange={onFilterChange} />
-              <span className="text-sm font-semibold text-muted" aria-live="polite">
+              <span className="text-muted text-sm font-semibold" aria-live="polite">
                 {t('eventos.showing', {
                   shown: formatNumber(Math.min(pastVisible, filteredPast.length), locale),
                   total: formatNumber(filteredPast.length, locale),
@@ -294,10 +296,10 @@ export function EventosPage() {
                         <TypeBadge type={event.type} label={t(`eventos.type.${event.type}`)} />
                         <Badge variant="solid">{t('eventos.completed')}</Badge>
                       </div>
-                      <h3 className="text-sm font-bold leading-snug text-balance">{tp(event.title)}</h3>
+                      <h3 className="text-sm leading-snug font-bold text-balance">{tp(event.title)}</h3>
                       <PlaceLine online={event.online} text={tp(event.location)} />
                       <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-1">
-                        <span className="text-xs font-semibold text-muted">
+                        <span className="text-muted text-xs font-semibold">
                           {formatDate(event.date, locale)}
                         </span>
                         {event.online && youtubeHref ? (
@@ -305,7 +307,7 @@ export function EventosPage() {
                             href={youtubeHref}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 text-xs font-bold text-accent-500 transition-colors duration-300 hover:text-accent-600"
+                            className="text-accent-500 hover:text-accent-600 inline-flex items-center gap-1.5 text-xs font-bold transition-colors duration-300"
                           >
                             <Video className="size-3.5" aria-hidden="true" />
                             {t('eventos.recording')}
@@ -318,7 +320,7 @@ export function EventosPage() {
               ))}
             </StaggerContainer>
           ) : (
-            <p className="mt-10 text-muted">{t('eventos.empty')}</p>
+            <p className="text-muted mt-10">{t('eventos.empty')}</p>
           )}
 
           {hasMorePast ? (
@@ -333,20 +335,20 @@ export function EventosPage() {
 
       <section className="shell py-20 md:py-28">
         <Reveal>
-          <Card className="grain relative overflow-hidden border-line-strong">
+          <Card className="grain border-line-strong relative overflow-hidden">
             <div
-              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-500 to-transparent"
+              className="via-accent-500 pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent to-transparent"
               aria-hidden="true"
             />
             <div className="flex flex-col items-start justify-between gap-8 p-8 md:flex-row md:items-center md:p-12">
               <div className="max-w-2xl">
-                <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-accent-500">
+                <span className="text-accent-500 text-[11px] font-bold tracking-[0.18em] uppercase">
                   {t('eventos.kicker')}
                 </span>
                 <h2 className="mt-4 text-2xl font-extrabold tracking-tight text-balance md:text-4xl">
                   {t('eventos.ctaTitle')}
                 </h2>
-                <p className="mt-4 text-ink-soft">{t('eventos.ctaDesc')}</p>
+                <p className="text-ink-soft mt-4">{t('eventos.ctaDesc')}</p>
               </div>
               <LinkButton to={`/${locale}/contacto`} variant="primary" size="lg" className="shrink-0">
                 {t('eventos.ctaButton')}

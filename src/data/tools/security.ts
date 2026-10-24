@@ -7,7 +7,7 @@ export const toolsSecurity: Tool[] = [
     name: 'Darktrace',
     desc: {
       es: 'Detección de anomalías de red y endpoint que aprende el comportamiento normal de tu empresa.',
-      en: 'Network and endpoint anomaly detection that learns your company\'s normal behavior.',
+      en: "Network and endpoint anomaly detection that learns your company's normal behavior.",
     },
     category: 'security',
     type: 'paid',

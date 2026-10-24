@@ -21,10 +21,7 @@ export function Tabs<T extends string>({ tabs, value, onChange, className }: Tab
   return (
     <div
       role="tablist"
-      className={cn(
-        'glass inline-flex flex-wrap items-center gap-1 rounded-full p-1',
-        className,
-      )}
+      className={cn('glass inline-flex flex-wrap items-center gap-1 rounded-full p-1', className)}
     >
       {tabs.map((tab) => {
         const Icon = tab.icon;
@@ -44,10 +41,8 @@ export function Tabs<T extends string>({ tabs, value, onChange, className }: Tab
             {active ? (
               <motion.span
                 layoutId="tab-indicator"
-                className="absolute inset-0 rounded-full bg-pill shadow-[0_2px_10px_rgb(0_0_0/0.18)]"
-                transition={
-                  reduced ? { duration: 0 } : { type: 'spring', bounce: 0.2, duration: 0.55 }
-                }
+                className="bg-pill absolute inset-0 rounded-full shadow-[0_2px_10px_rgb(0_0_0/0.18)]"
+                transition={reduced ? { duration: 0 } : { type: 'spring', bounce: 0.2, duration: 0.55 }}
               />
             ) : null}
             <span className="relative z-10 inline-flex items-center gap-2">

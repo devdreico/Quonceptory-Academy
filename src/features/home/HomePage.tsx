@@ -62,7 +62,10 @@ const heroWord = {
 export function HomePage() {
   const { locale, t, tp } = useLocale();
   const reduced = useReducedMotion();
-  useMeta(t('home.meta.title'), siteConfig.description[locale]);
+  useMeta(t('home.meta.title'), {
+    description: siteConfig.description[locale],
+    canonical: `/${locale}`,
+  });
 
   const heroRef = useRef<HTMLElement>(null);
   const storyRef = useRef<HTMLElement>(null);
@@ -119,8 +122,13 @@ export function HomePage() {
                 draggable={false}
                 loading={index === 0 ? 'eager' : 'lazy'}
                 decoding="async"
-                className={reduced ? 'h-full w-full object-cover' : 'h-full w-full object-cover animate-kenburns'}
-                style={{ objectPosition: item.position, animationDirection: index % 2 ? 'alternate-reverse' : 'alternate' }}
+                className={
+                  reduced ? 'h-full w-full object-cover' : 'animate-kenburns h-full w-full object-cover'
+                }
+                style={{
+                  objectPosition: item.position,
+                  animationDirection: index % 2 ? 'alternate-reverse' : 'alternate',
+                }}
               />
             </motion.div>
           ))}
@@ -141,7 +149,7 @@ export function HomePage() {
             animate="show"
             transition={{ staggerChildren: 0.09, delayChildren: 0.35 }}
           >
-            <p className="text-4xl font-extrabold leading-[1.12] tracking-[-0.03em] text-balance drop-shadow-[0_4px_32px_rgb(0_0_0/0.65)] sm:text-5xl md:text-6xl lg:text-7xl">
+            <p className="text-4xl leading-[1.12] font-extrabold tracking-[-0.03em] text-balance drop-shadow-[0_4px_32px_rgb(0_0_0/0.65)] sm:text-5xl md:text-6xl lg:text-7xl">
               {quoteWords.map((word, index) => (
                 <motion.span
                   key={`${word}-${index}`}
@@ -160,9 +168,7 @@ export function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: reduced ? 0 : 1.15, ease: EASE_OUT_EXPO }}
             >
-              <span
-                className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.3em] text-white/75 drop-shadow-[0_2px_12px_rgb(0_0_0/0.6)] sm:text-sm"
-              >
+              <span className="inline-flex items-center gap-3 text-xs font-bold tracking-[0.3em] text-white/75 uppercase drop-shadow-[0_2px_12px_rgb(0_0_0/0.6)] sm:text-sm">
                 <span className="h-px w-8 bg-white/50" aria-hidden="true" />
                 {t('home.hero.quoteBy')}
                 <span className="h-px w-8 bg-white/50" aria-hidden="true" />
@@ -172,58 +178,57 @@ export function HomePage() {
         </motion.div>
       </section>
 
-
       <section className="shell py-16">
-        <p className="mb-8 text-center text-xs font-bold uppercase tracking-[0.18em] text-muted">
+        <p className="text-muted mb-8 text-center text-xs font-bold tracking-[0.18em] uppercase">
           {t('home.stats.kicker')}
         </p>
         <StaggerContainer className="grid grid-cols-2 gap-4 md:grid-cols-4">
           {stats.slice(0, 4).map((stat) => (
             <StaggerItem key={stat.id}>
-              <div className="glass rounded-3xl px-5 py-8 text-center transition-all duration-500 hover:-translate-y-1 hover:glass-strong">
+              <div className="glass hover:glass-strong rounded-3xl px-5 py-8 text-center transition-all duration-500 hover:-translate-y-1">
                 <p className="text-3xl font-extrabold tracking-tight md:text-4xl">
                   <Counter value={stat.value} suffix={stat.suffix ?? ''} />
                 </p>
-                <p className="mt-2 text-sm text-muted">{tp(stat.label)}</p>
+                <p className="text-muted mt-2 text-sm">{tp(stat.label)}</p>
               </div>
             </StaggerItem>
           ))}
         </StaggerContainer>
       </section>
 
-      <section className="border-y border-line bg-glass-bg backdrop-blur-xl">
+      <section className="border-line bg-glass-bg border-y backdrop-blur-xl">
         <div className="shell flex flex-wrap items-center justify-between gap-4 py-6">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted">
+          <p className="text-muted text-xs font-bold tracking-[0.18em] uppercase">
             {t('home.marquee.label')}
           </p>
           <Link
             to={`/${locale}/herramientas`}
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent-500 transition-transform duration-300 hover:translate-x-0.5"
+            className="text-accent-500 inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase transition-transform duration-300 hover:translate-x-0.5"
           >
             {t('home.marquee.cta')} <ArrowRight className="size-3.5" aria-hidden="true" />
           </Link>
         </div>
-        <div className="border-t border-line pb-8">
+        <div className="border-line border-t pb-8">
           <Marquee duration={48}>
             {toolCategories.map((category, index) => (
               <Fragment key={category.id}>
                 {index > 0 ? (
-                  <span className="size-1 shrink-0 rounded-full bg-accent-500/50" aria-hidden="true" />
+                  <span className="bg-accent-500/50 size-1 shrink-0 rounded-full" aria-hidden="true" />
                 ) : null}
-                <span className="glass shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold text-ink-soft">
+                <span className="glass text-ink-soft shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold">
                   {tp(category.label)}
                 </span>
               </Fragment>
             ))}
-            <span className="size-1 shrink-0 rounded-full bg-accent-500/50" aria-hidden="true" />
-            <span className="shrink-0 rounded-full bg-accent-500 px-5 py-2.5 text-sm font-semibold text-on-accent">
+            <span className="bg-accent-500/50 size-1 shrink-0 rounded-full" aria-hidden="true" />
+            <span className="bg-accent-500 text-on-accent shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold">
               {formatNumber(allTools.length, locale)}+
             </span>
           </Marquee>
         </div>
       </section>
 
-      <section ref={storyRef} className="relative border-y border-line bg-glass-bg">
+      <section ref={storyRef} className="border-line bg-glass-bg relative border-y">
         <div className="shell py-16 md:py-24">
           <PageHeader
             kicker={t('home.method.phasesLabel')}
@@ -237,15 +242,18 @@ export function HomePage() {
                 return (
                   <div key={track.id} className="flex min-h-[42vh] items-center py-8">
                     <motion.div
-                      animate={{ opacity: activePhase === index ? 1 : 0.48, x: activePhase === index ? 0 : 8 }}
+                      animate={{
+                        opacity: activePhase === index ? 1 : 0.48,
+                        x: activePhase === index ? 0 : 8,
+                      }}
                       transition={{ duration: reduced ? 0 : 0.35 }}
                       className="max-w-sm"
                     >
-                      <p className="text-xs font-bold uppercase tracking-widest text-accent-500">
+                      <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">
                         {String(index + 1).padStart(2, '0')} / 04
                       </p>
                       <h3 className="mt-3 text-2xl font-bold md:text-3xl">{tp(track.title)}</h3>
-                      <p className="mt-3 text-sm leading-relaxed text-muted">{tp(track.desc)}</p>
+                      <p className="text-muted mt-3 text-sm leading-relaxed">{tp(track.desc)}</p>
                     </motion.div>
                   </div>
                 );
@@ -256,11 +264,11 @@ export function HomePage() {
               <div className="glass grain relative grid min-h-[58vh] w-full place-items-center overflow-hidden rounded-3xl p-6 md:p-10">
                 <div className="grid-bg pointer-events-none absolute inset-0 opacity-50" aria-hidden="true" />
                 <div className="relative aspect-square w-full max-w-[31rem]">
-                  <div className="absolute inset-[15%] rounded-full border border-line-strong" />
-                  <div className="absolute inset-[29%] rounded-full border border-line" />
-                  <div className="absolute inset-[43%] rounded-full border border-line" />
-                  <div className="absolute left-1/2 top-[15%] h-[70%] w-px -translate-x-1/2 bg-line-strong" />
-                  <div className="absolute left-[15%] top-1/2 h-px w-[70%] -translate-y-1/2 bg-line-strong" />
+                  <div className="border-line-strong absolute inset-[15%] rounded-full border" />
+                  <div className="border-line absolute inset-[29%] rounded-full border" />
+                  <div className="border-line absolute inset-[43%] rounded-full border" />
+                  <div className="bg-line-strong absolute top-[15%] left-1/2 h-[70%] w-px -translate-x-1/2" />
+                  <div className="bg-line-strong absolute top-1/2 left-[15%] h-px w-[70%] -translate-y-1/2" />
                   {tracks.slice(0, 4).map((track, index) => {
                     const Icon = trackIcons[index];
                     const positions = [
@@ -276,28 +284,30 @@ export function HomePage() {
                         initial={false}
                         animate={{ opacity: visible ? 1 : 0.22, scale: visible ? 1 : 0.82 }}
                         transition={{ duration: reduced ? 0 : 0.45, ease: EASE_OUT_EXPO }}
-                        className={`absolute z-10 ${positions[index]} flex size-14 items-center justify-center rounded-2xl border border-line bg-bg shadow-[0_8px_24px_rgb(0_0_0/0.12)] md:size-16`}
+                        className={`absolute z-10 ${positions[index]} border-line bg-bg flex size-14 items-center justify-center rounded-2xl border shadow-[0_8px_24px_rgb(0_0_0/0.12)] md:size-16`}
                         aria-label={tp(track.title)}
                       >
-                        <Icon className="size-5 text-accent-500 md:size-6" aria-hidden="true" />
+                        <Icon className="text-accent-500 size-5 md:size-6" aria-hidden="true" />
                       </motion.div>
                     );
                   })}
-                  <div className="absolute inset-[34%] flex flex-col items-center justify-center rounded-full bg-accent-500 text-center text-on-accent shadow-[0_16px_44px_rgb(0_0_0/0.25)]">
-                    <span className="text-[10px] font-bold uppercase tracking-widest opacity-70">Quonceptory</span>
+                  <div className="bg-accent-500 text-on-accent absolute inset-[34%] flex flex-col items-center justify-center rounded-full text-center shadow-[0_16px_44px_rgb(0_0_0/0.25)]">
+                    <span className="text-[10px] font-bold tracking-widest uppercase opacity-70">
+                      Quonceptory
+                    </span>
                     <span className="mt-1 text-sm font-extrabold md:text-base">
                       {tp(tracks[activePhase]?.title ?? tracks[0].title)}
                     </span>
                   </div>
                   <motion.div
-                    className="absolute inset-[8%] rounded-full border border-accent-500/30"
+                    className="border-accent-500/30 absolute inset-[8%] rounded-full border"
                     animate={reduced ? undefined : { rotate: 360 }}
                     transition={{ duration: 32, repeat: Infinity, ease: 'linear' }}
                     aria-hidden="true"
                   />
                 </div>
-                <div className="absolute bottom-5 left-6 right-6 flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-muted md:left-10 md:right-10">
-                  <span>{locale === 'es' ? 'Sistema en evolución' : 'Evolving system'}</span>
+                <div className="text-muted absolute right-6 bottom-5 left-6 flex items-center justify-between text-[10px] font-bold tracking-widest uppercase md:right-10 md:left-10">
+                  <span>{t('home.method.systemStatus')}</span>
                   <span>{String(activePhase + 1).padStart(2, '0')} / 04</span>
                 </div>
               </div>
@@ -306,16 +316,14 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="border-y border-line bg-glass-bg">
+      <section className="border-line bg-glass-bg border-y">
         <div className="shell py-16 md:py-24">
           <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-accent-500">
-                {locale === 'es' ? 'Ideas en movimiento' : 'Ideas in motion'}
+              <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">
+                {t('home.social.kicker')}
               </p>
-              <h2 className="mt-3 max-w-xl text-3xl font-extrabold md:text-5xl">
-                {locale === 'es' ? 'La conversación continúa en nuestras redes.' : 'The conversation continues across our channels.'}
-              </h2>
+              <h2 className="mt-3 max-w-xl text-3xl font-extrabold md:text-5xl">{t('home.social.title')}</h2>
             </div>
             <a
               href={`https://www.youtube.com/results?search_query=${encodeURIComponent('Founder - Allerihe')}`}
@@ -323,13 +331,14 @@ export function HomePage() {
               rel="noreferrer"
               className="group relative flex min-h-48 items-end justify-between overflow-hidden rounded-2xl bg-[#d82424] p-6 text-white shadow-[0_12px_30px_rgb(80_0_0/0.18)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgb(80_0_0/0.26)] md:min-h-56 md:p-8"
             >
-              <div className="absolute -right-8 -top-12 size-56 rounded-full border border-white/20 transition-transform duration-700 group-hover:scale-110" aria-hidden="true" />
+              <div
+                className="absolute -top-12 -right-8 size-56 rounded-full border border-white/20 transition-transform duration-700 group-hover:scale-110"
+                aria-hidden="true"
+              />
               <div className="relative">
-                <p className="text-xs font-bold uppercase tracking-widest text-white/75">YouTube</p>
+                <p className="text-xs font-bold tracking-widest text-white/75 uppercase">YouTube</p>
                 <h3 className="mt-3 text-2xl font-extrabold md:text-4xl">Founder - Allerihe</h3>
-                <p className="mt-2 text-sm text-white/80">
-                  {locale === 'es' ? 'Ver canal y conversaciones' : 'Explore the channel and conversations'}
-                </p>
+                <p className="mt-2 text-sm text-white/80">{t('home.social.youtubeCta')}</p>
               </div>
               <span className="relative flex size-12 shrink-0 items-center justify-center rounded-full bg-white text-[#d82424] shadow-lg transition-transform duration-300 group-hover:translate-x-1">
                 <ArrowRight className="size-5" aria-hidden="true" />
@@ -342,16 +351,23 @@ export function HomePage() {
               .map((social) => (
                 <a
                   key={social.label}
-                  href={social.label === 'YouTube' ? `https://www.youtube.com/results?search_query=${encodeURIComponent('Founder - Allerihe')}` : social.href}
+                  href={
+                    social.label === 'YouTube'
+                      ? `https://www.youtube.com/results?search_query=${encodeURIComponent('Founder - Allerihe')}`
+                      : social.href
+                  }
                   target="_blank"
                   rel="noreferrer"
-                  className="glass group flex min-h-16 items-center justify-between gap-3 rounded-xl px-4 transition-all duration-300 hover:-translate-y-1 hover:glass-strong"
+                  className="glass group hover:glass-strong flex min-h-16 items-center justify-between gap-3 rounded-xl px-4 transition-all duration-300 hover:-translate-y-1"
                 >
                   <span className="flex items-center gap-3 text-sm font-semibold">
-                    <SocialIcon name={social.icon} className="size-4 text-accent-500" />
+                    <SocialIcon name={social.icon} className="text-accent-500 size-4" />
                     {social.label}
                   </span>
-                  <ArrowRight className="size-4 text-muted transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                  <ArrowRight
+                    className="text-muted size-4 transition-transform group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
                 </a>
               ))}
           </div>
@@ -361,13 +377,11 @@ export function HomePage() {
       <section className="shell py-20 md:py-28">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-5">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-accent-500">
-              {t('nav.academia')}
-            </p>
+            <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">{t('nav.academia')}</p>
             <h2 className="mt-3 text-3xl font-extrabold tracking-tight md:text-5xl">
               {t('home.tracks.title')}
             </h2>
-            <p className="mt-4 max-w-2xl text-ink-soft">{t('home.tracks.desc')}</p>
+            <p className="text-ink-soft mt-4 max-w-2xl">{t('home.tracks.desc')}</p>
           </div>
           <LinkButton to={`/${locale}/academia`} variant="outline">
             {t('home.tracks.viewAll')} <ArrowRight className="size-4" />
@@ -379,12 +393,10 @@ export function HomePage() {
               <SpotlightCard className="h-full p-6">
                 <div className="flex items-start justify-between gap-4">
                   <h3 className="text-xl font-bold">{tp(track.title)}</h3>
-                  <Badge variant="outline">
-                    {locale === 'es' ? `Fase ${track.phase}` : `Phase ${track.phase}`}
-                  </Badge>
+                  <Badge variant="outline">{t('home.tracks.phase', { phase: track.phase })}</Badge>
                 </div>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{tp(track.desc)}</p>
-                <p className="mt-5 text-xs font-semibold text-accent-500">
+                <p className="text-muted mt-3 text-sm leading-relaxed">{tp(track.desc)}</p>
+                <p className="text-accent-500 mt-5 text-xs font-semibold">
                   {t('home.tracks.hours', { count: track.hours })} ·{' '}
                   {t('home.tracks.topics', { count: track.topicsCount })}
                 </p>
@@ -394,17 +406,17 @@ export function HomePage() {
         </StaggerContainer>
       </section>
 
-      <section className="border-y border-line bg-glass-bg backdrop-blur-xl">
+      <section className="border-line bg-glass-bg border-y backdrop-blur-xl">
         <div className="shell py-20 md:py-28">
           <div className="mb-10 flex flex-wrap items-end justify-between gap-5">
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-accent-500">
+              <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">
                 {t('home.projects.metrics')}
               </p>
               <h2 className="mt-3 text-3xl font-extrabold tracking-tight md:text-5xl">
                 {t('home.projects.title')}
               </h2>
-              <p className="mt-4 max-w-2xl text-ink-soft">{t('home.projects.desc')}</p>
+              <p className="text-ink-soft mt-4 max-w-2xl">{t('home.projects.desc')}</p>
             </div>
             <LinkButton to={`/${locale}/proyectos`} variant="outline">
               {t('home.projects.viewAll')} <ArrowRight className="size-4" />
@@ -416,10 +428,10 @@ export function HomePage() {
                 <Card className="h-full p-6">
                   <Badge variant="accent">{t(`home.status.${project.status}`)}</Badge>
                   <h3 className="mt-4 text-lg font-bold">{tp(project.title)}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{tp(project.desc)}</p>
+                  <p className="text-muted mt-2 text-sm leading-relaxed">{tp(project.desc)}</p>
                   <div className="mt-5 space-y-2">
                     {project.metrics.slice(0, 2).map((metric) => (
-                      <p key={metric.es} className="text-sm font-semibold text-accent-500">
+                      <p key={metric.es} className="text-accent-500 text-sm font-semibold">
                         {tp(metric)}
                       </p>
                     ))}
@@ -434,7 +446,7 @@ export function HomePage() {
       <section className="shell py-20 md:py-28">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-5">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-accent-500">
+            <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">
               {t('home.events.title')}
             </p>
             <h2 className="mt-3 text-3xl font-extrabold tracking-tight md:text-5xl">
@@ -449,33 +461,27 @@ export function HomePage() {
           {upcoming.map((event) => (
             <StaggerItem key={event.id}>
               <Card className="h-full p-5 transition-all duration-500 hover:-translate-y-1">
-                <p className="text-xs font-bold uppercase tracking-widest text-accent-500">
+                <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">
                   {formatDate(event.date, locale)}
                 </p>
                 <h3 className="mt-3 font-bold">{tp(event.title)}</h3>
-                <p className="mt-2 text-sm text-muted">{tp(event.location)}</p>
+                <p className="text-muted mt-2 text-sm">{tp(event.location)}</p>
               </Card>
             </StaggerItem>
           ))}
-          {upcoming.length === 0 ? (
-            <p className="text-muted">
-              {locale === 'es' ? 'Estamos preparando los próximos eventos.' : 'We are preparing the next events.'}
-            </p>
-          ) : null}
+          {upcoming.length === 0 ? <p className="text-muted">{t('home.events.empty')}</p> : null}
         </StaggerContainer>
       </section>
 
-      <section className="border-y border-line bg-glass-bg backdrop-blur-xl">
+      <section className="border-line bg-glass-bg border-y backdrop-blur-xl">
         <div className="shell py-20 md:py-28">
           <div className="mb-10 flex flex-wrap items-end justify-between gap-5">
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-accent-500">
-                {t('nav.blog')}
-              </p>
+              <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">{t('nav.blog')}</p>
               <h2 className="mt-3 text-3xl font-extrabold tracking-tight md:text-5xl">
                 {t('home.blog.title')}
               </h2>
-              <p className="mt-4 max-w-2xl text-ink-soft">{t('home.blog.desc')}</p>
+              <p className="text-ink-soft mt-4 max-w-2xl">{t('home.blog.desc')}</p>
             </div>
             <LinkButton to={`/${locale}/blog`} variant="outline">
               {t('home.blog.viewAll')} <ArrowRight className="size-4" />
@@ -486,14 +492,12 @@ export function HomePage() {
               <StaggerItem key={post.id}>
                 <Link to={`/${locale}/blog/${post.slug}`} className="block h-full">
                   <Card className="h-full p-5">
-                    <p className="text-xs font-bold uppercase tracking-widest text-accent-500">
+                    <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">
                       {post.category} · {post.readMinutes} {t('common.minutes')}
                     </p>
-                    <h3 className="mt-3 font-bold leading-snug">{tp(post.title)}</h3>
-                    <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted">
-                      {tp(post.excerpt)}
-                    </p>
-                    <p className="mt-5 text-xs text-muted">{t('home.blog.by', { author: post.author })}</p>
+                    <h3 className="mt-3 leading-snug font-bold">{tp(post.title)}</h3>
+                    <p className="text-muted mt-3 line-clamp-3 text-sm leading-relaxed">{tp(post.excerpt)}</p>
+                    <p className="text-muted mt-5 text-xs">{t('home.blog.by', { author: post.author })}</p>
                   </Card>
                 </Link>
               </StaggerItem>
@@ -506,21 +510,21 @@ export function HomePage() {
         <Reveal>
           <div className="shine-overlay grain glass relative overflow-hidden rounded-[2.5rem] p-8 md:p-14">
             <div
-              className="pointer-events-none absolute -right-24 -bottom-32 size-80 rounded-full bg-glow blur-3xl animate-float-slow"
+              className="bg-glow animate-float-slow pointer-events-none absolute -right-24 -bottom-32 size-80 rounded-full blur-3xl"
               aria-hidden="true"
             />
             <div
-              className="pointer-events-none absolute -top-24 -left-16 size-56 rounded-full bg-glow blur-3xl animate-float"
+              className="bg-glow animate-float pointer-events-none absolute -top-24 -left-16 size-56 rounded-full blur-3xl"
               aria-hidden="true"
             />
             <div className="relative max-w-3xl">
-              <p className="text-xs font-bold uppercase tracking-widest text-accent-500">
+              <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">
                 {t('home.final.kicker')}
               </p>
               <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-balance md:text-6xl">
                 {t('home.final.title')}
               </h2>
-              <p className="mt-5 max-w-2xl text-ink-soft">{t('home.final.desc')}</p>
+              <p className="text-ink-soft mt-5 max-w-2xl">{t('home.final.desc')}</p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <MagneticButton>
                   <LinkButton to={`/${locale}/contacto`} size="lg">
@@ -531,7 +535,7 @@ export function HomePage() {
                   {t('home.final.ctaSecondary')}
                 </LinkButton>
               </div>
-              <p className="mt-5 text-xs text-muted">{t('home.final.micro')}</p>
+              <p className="text-muted mt-5 text-xs">{t('home.final.micro')}</p>
             </div>
           </div>
         </Reveal>
