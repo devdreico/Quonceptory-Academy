@@ -1,26 +1,60 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
-import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, BrainCircuit, Code2, Database, Sparkles } from 'lucide-react';
+import { useEffect, useRef, useState, type PointerEvent, type RefObject } from 'react';
+import {
+  AnimatePresence,
+  motion,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from 'framer-motion';
+import {
+  ArrowRight,
+  BrainCircuit,
+  ChevronLeft,
+  ChevronRight,
+  Code2,
+  Database,
+  ExternalLink,
+  Sparkles,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { siteConfig } from '@/config/site';
 import { Badge } from '@/components/ui/Badge';
 import { LinkButton } from '@/components/ui/Button';
 import { Card, SpotlightCard } from '@/components/ui/Card';
-import { Counter } from '@/components/ui/Counter';
 import { MagneticButton } from '@/components/ui/MagneticButton';
-import { Marquee } from '@/components/ui/Marquee';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Reveal, StaggerContainer, StaggerItem } from '@/components/ui/Reveal';
 import { SocialIcon } from '@/components/ui/SocialIcon';
 import { useLocale } from '@/i18n';
-import { events, posts, projects, stats, toolCategories, allTools, tracks } from '@/data';
-import { formatDate, formatNumber } from '@/lib/utils';
+import {
+  events,
+  posts,
+  projects,
+  toolCategories,
+  allTools,
+  toolLevelLabels,
+  toolTypeLabels,
+  tracks,
+} from '@/data';
+import { formatDate } from '@/lib/utils';
 import { useMeta } from '@/lib/useMeta';
 import { EASE_OUT_EXPO } from '@/lib/animations';
 
 const trackIcons = [BrainCircuit, Sparkles, Database, Code2];
 
 const HERO_SLIDE_MS = 7000;
+const HERO_QUOTE_MS = 8500;
+
+const HERO_QUOTES = [
+  { quote: 'home.hero.quote', by: 'home.hero.quoteBy' },
+  { quote: 'home.hero.quote2', by: 'home.hero.quoteBy2' },
+  { quote: 'home.hero.quote3', by: 'home.hero.quoteBy3' },
+  { quote: 'home.hero.quote4', by: 'home.hero.quoteBy4' },
+  { quote: 'home.hero.quote5', by: 'home.hero.quoteBy5' },
+] as const;
+
+const FEATURED_TOOLS = allTools.filter((tool) => tool.featured && tool.url).slice(0, 8);
 
 const HERO_SLIDES = [
   {
@@ -49,16 +83,6 @@ const HERO_SLIDES = [
   },
 ] as const;
 
-const heroWord = {
-  hidden: { opacity: 0, y: 30, filter: 'blur(8px)' },
-  show: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: { duration: 0.9, ease: EASE_OUT_EXPO },
-  },
-} as const;
-
 export function HomePage() {
   const { locale, t, tp } = useLocale();
   const reduced = useReducedMotion();
@@ -69,7 +93,12 @@ export function HomePage() {
 
   const heroRef = useRef<HTMLElement>(null);
   const storyRef = useRef<HTMLElement>(null);
+  const toolsRef = useRef<HTMLDivElement>(null);
+  const tracksRef = useRef<HTMLDivElement>(null);
+  const eventsRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
   const [slide, setSlide] = useState(0);
+  const [quoteIndex, setQuoteIndex] = useState(0);
   const [activePhase, setActivePhase] = useState(0);
   const { scrollY } = useScroll();
   const { scrollYProgress: storyProgress } = useScroll({
@@ -91,6 +120,14 @@ export function HomePage() {
     return () => window.clearInterval(id);
   }, [reduced]);
 
+  useEffect(() => {
+    if (reduced) return;
+    const id = window.setInterval(() => {
+      setQuoteIndex((current) => (current + 1) % HERO_QUOTES.length);
+    }, HERO_QUOTE_MS);
+    return () => window.clearInterval(id);
+  }, [reduced]);
+
   const upcoming = events
     .filter((event) => new Date(event.date).getTime() > Date.now())
     .sort((a, b) => Date.parse(a.date) - Date.parse(b.date))
@@ -98,13 +135,42 @@ export function HomePage() {
   const featuredProjects = projects.filter((project) => project.featured).slice(0, 3);
   const featuredPosts = posts.filter((post) => post.featured).slice(0, 3);
 
-  const quoteWords = t('home.hero.quote').split(' ');
+  const quote = HERO_QUOTES[quoteIndex];
+  const quoteWords = t(quote.quote).split(' ');
+  const shiftCarousel = (ref: RefObject<HTMLDivElement | null>, direction: -1 | 1) => {
+    const carousel = ref.current;
+    if (carousel) {
+      carousel.scrollBy({
+        left: direction * carousel.clientWidth * 0.8,
+        behavior: reduced ? 'auto' : 'smooth',
+      });
+    }
+  };
+  const changeQuote = (direction: -1 | 1) => {
+    setQuoteIndex((current) => (current + direction + HERO_QUOTES.length) % HERO_QUOTES.length);
+  };
+  const handleHeroPointerUp = (event: PointerEvent<HTMLElement>) => {
+    if (touchStartX.current === null) return;
+    const distance = event.clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(distance) < 50) return;
+    const direction = distance < 0 ? 1 : -1;
+    changeQuote(direction);
+    setSlide((current) => (current + direction + HERO_SLIDES.length) % HERO_SLIDES.length);
+  };
 
   return (
     <>
       <section
         ref={heroRef}
-        className="relative h-[calc(100svh-4rem)] min-h-[540px] overflow-hidden md:h-[calc(100svh-4.5rem)]"
+        className="relative h-[calc(100svh-4rem)] min-h-[540px] touch-pan-y overflow-hidden md:h-[calc(100svh-4.5rem)]"
+        onPointerDown={(event) => {
+          touchStartX.current = event.pointerType === 'mouse' ? null : event.clientX;
+        }}
+        onPointerUp={handleHeroPointerUp}
+        onPointerCancel={() => {
+          touchStartX.current = null;
+        }}
       >
         <motion.div style={reduced ? undefined : { y: parallaxY }} className="absolute inset-0">
           {HERO_SLIDES.map((item, index) => (
@@ -143,92 +209,171 @@ export function HomePage() {
           style={reduced ? undefined : { opacity: quoteOpacity }}
           className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white"
         >
-          <motion.blockquote
-            className="max-w-5xl"
-            initial="hidden"
-            animate="show"
-            transition={{ staggerChildren: 0.09, delayChildren: 0.35 }}
-          >
-            <p className="text-4xl leading-[1.12] font-extrabold tracking-[-0.03em] text-balance drop-shadow-[0_4px_32px_rgb(0_0_0/0.65)] sm:text-5xl md:text-6xl lg:text-7xl">
-              {quoteWords.map((word, index) => (
-                <motion.span
-                  key={`${word}-${index}`}
-                  className="inline-block"
-                  variants={reduced ? undefined : heroWord}
-                  style={reduced ? { opacity: 1 } : undefined}
+          <div className="flex w-full flex-col items-center">
+            <AnimatePresence mode="wait">
+              <motion.blockquote
+                key={quoteIndex}
+                className="max-w-5xl"
+                initial={reduced ? { opacity: 0 } : { opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduced ? { opacity: 0 } : { opacity: 0, y: -14 }}
+                transition={{ duration: reduced ? 0.15 : 0.55, ease: EASE_OUT_EXPO }}
+                aria-live="polite"
+              >
+                <h1
+                  className="font-serif text-4xl leading-[1.12] font-bold tracking-[-0.025em] text-balance drop-shadow-[0_4px_32px_rgb(0_0_0/0.65)] sm:text-5xl md:text-6xl lg:text-7xl"
+                  style={{ fontFamily: '"Times New Roman", Times, serif' }}
                 >
-                  {word}
-                  {index < quoteWords.length - 1 ? ' ' : ''}
-                </motion.span>
-              ))}
-            </p>
-            <motion.footer
-              className="mt-8"
-              initial={reduced ? { opacity: 1 } : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: reduced ? 0 : 1.15, ease: EASE_OUT_EXPO }}
-            >
-              <span className="inline-flex items-center gap-3 text-xs font-bold tracking-[0.3em] text-white/75 uppercase drop-shadow-[0_2px_12px_rgb(0_0_0/0.6)] sm:text-sm">
-                <span className="h-px w-8 bg-white/50" aria-hidden="true" />
-                {t('home.hero.quoteBy')}
-                <span className="h-px w-8 bg-white/50" aria-hidden="true" />
-              </span>
-            </motion.footer>
-          </motion.blockquote>
+                  {quoteWords.map((word, index) => (
+                    <span key={`${word}-${index}`} className="inline-block">
+                      {word}
+                      {index < quoteWords.length - 1 ? ' ' : ''}
+                    </span>
+                  ))}
+                </h1>
+                <footer className="mt-6">
+                  <span className="inline-flex items-center gap-3 text-xs font-bold tracking-[0.3em] text-white/75 uppercase drop-shadow-[0_2px_12px_rgb(0_0_0/0.6)] sm:text-sm">
+                    <span className="h-px w-8 bg-white/50" aria-hidden="true" />
+                    {t(quote.by)}
+                    <span className="h-px w-8 bg-white/50" aria-hidden="true" />
+                  </span>
+                </footer>
+              </motion.blockquote>
+            </AnimatePresence>
+            <div className="mt-6 flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => changeQuote(-1)}
+                aria-label={t('home.hero.previousQuote')}
+                className="grid size-10 place-items-center rounded-full border border-white/30 text-white transition hover:bg-white/15"
+              >
+                <ChevronLeft className="size-5" aria-hidden="true" />
+              </button>
+              <div role="group" className="flex items-center gap-2" aria-label={t('home.hero.quotesLabel')}>
+                {HERO_QUOTES.map((item, index) => (
+                  <button
+                    key={item.quote}
+                    type="button"
+                    aria-label={t('home.hero.goToQuote', { number: index + 1 })}
+                    aria-current={quoteIndex === index ? 'true' : undefined}
+                    onClick={() => setQuoteIndex(index)}
+                    className={`h-2 rounded-full transition-all ${quoteIndex === index ? 'w-7 bg-white' : 'w-2 bg-white/50 hover:bg-white/80'}`}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => changeQuote(1)}
+                aria-label={t('home.hero.nextQuote')}
+                className="grid size-10 place-items-center rounded-full border border-white/30 text-white transition hover:bg-white/15"
+              >
+                <ChevronRight className="size-5" aria-hidden="true" />
+              </button>
+            </div>
+            <div className="mt-7 flex flex-wrap justify-center gap-3">
+              <LinkButton to={`/${locale}/academia`} size="lg">
+                {t('home.hero.ctaStart')} <ArrowRight className="size-4" />
+              </LinkButton>
+              <LinkButton
+                to={`/${locale}/herramientas`}
+                size="lg"
+                variant="outline"
+                className="border-white/40 text-white hover:bg-white/15"
+              >
+                {t('home.hero.ctaTools')}
+              </LinkButton>
+              <LinkButton
+                to={`/${locale}/metodo`}
+                size="lg"
+                variant="outline"
+                className="border-white/40 text-white hover:bg-white/15"
+              >
+                {t('home.hero.ctaMethod')}
+              </LinkButton>
+            </div>
+          </div>
         </motion.div>
       </section>
 
-      <section className="shell py-16">
-        <p className="text-muted mb-8 text-center text-xs font-bold tracking-[0.18em] uppercase">
-          {t('home.stats.kicker')}
-        </p>
-        <StaggerContainer className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          {stats.slice(0, 4).map((stat) => (
-            <StaggerItem key={stat.id}>
-              <div className="glass hover:glass-strong rounded-3xl px-5 py-8 text-center transition-all duration-500 hover:-translate-y-1">
-                <p className="text-3xl font-extrabold tracking-tight md:text-4xl">
-                  <Counter value={stat.value} suffix={stat.suffix ?? ''} />
-                </p>
-                <p className="text-muted mt-2 text-sm">{tp(stat.label)}</p>
-              </div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-      </section>
-
       <section className="border-line bg-glass-bg border-y backdrop-blur-xl">
-        <div className="shell flex flex-wrap items-center justify-between gap-4 py-6">
-          <p className="text-muted text-xs font-bold tracking-[0.18em] uppercase">
-            {t('home.marquee.label')}
-          </p>
-          <Link
-            to={`/${locale}/herramientas`}
-            className="text-accent-500 inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase transition-transform duration-300 hover:translate-x-0.5"
+        <div className="shell py-14 md:py-20">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
+            <div>
+              <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">
+                {t('home.tools.kicker')}
+              </p>
+              <h2 className="mt-3 text-3xl font-extrabold tracking-tight md:text-5xl">
+                {t('home.tools.featuredTitle')}
+              </h2>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <LinkButton to={`/${locale}/herramientas`} variant="outline">
+                {t('home.marquee.cta')} <ArrowRight className="size-4" />
+              </LinkButton>
+              <div className="hidden gap-2 sm:flex">
+                <button
+                  type="button"
+                  onClick={() => shiftCarousel(toolsRef, -1)}
+                  aria-label={t('home.carousel.previous')}
+                  className="border-line-strong hover:border-accent-500 grid size-10 place-items-center rounded-full border transition"
+                >
+                  <ChevronLeft className="size-5" aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => shiftCarousel(toolsRef, 1)}
+                  aria-label={t('home.carousel.next')}
+                  className="border-line-strong hover:border-accent-500 grid size-10 place-items-center rounded-full border transition"
+                >
+                  <ChevronRight className="size-5" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            ref={toolsRef}
+            role="region"
+            aria-roledescription="carousel"
+            className="flex touch-pan-x snap-x snap-mandatory [scrollbar-width:thin] gap-4 overflow-x-auto overscroll-x-contain pb-4"
+            aria-label={t('home.tools.featuredTitle')}
           >
-            {t('home.marquee.cta')} <ArrowRight className="size-3.5" aria-hidden="true" />
-          </Link>
-        </div>
-        <div className="border-line border-t pb-8">
-          <Marquee duration={48}>
-            {toolCategories.map((category, index) => (
-              <Fragment key={category.id}>
-                {index > 0 ? (
-                  <span className="bg-accent-500/50 size-1 shrink-0 rounded-full" aria-hidden="true" />
-                ) : null}
-                <span className="glass text-ink-soft shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold">
-                  {tp(category.label)}
-                </span>
-              </Fragment>
+            {FEATURED_TOOLS.map((tool) => (
+              <Card
+                key={tool.id}
+                className="flex w-[82%] shrink-0 snap-start flex-col p-5 sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)]"
+              >
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="accent">
+                    {tp(
+                      toolCategories.find((category) => category.id === tool.category)?.label ?? {
+                        es: tool.category,
+                        en: tool.category,
+                      },
+                    )}
+                  </Badge>
+                  <Badge variant="neutral">{tp(toolLevelLabels[tool.level])}</Badge>
+                </div>
+                <h3 className="mt-4 text-xl font-bold">{tool.name}</h3>
+                <p className="text-muted mt-2 flex-1 text-sm leading-relaxed">{tp(tool.desc)}</p>
+                <div className="border-line mt-5 flex items-center justify-between border-t pt-4">
+                  <span className="text-muted text-xs">{tp(toolTypeLabels[tool.type])}</span>
+                  <a
+                    href={tool.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={t('catalogo.openTool', { name: tool.name })}
+                    className="text-accent-500 inline-flex items-center gap-1.5 text-sm font-semibold hover:underline"
+                  >
+                    {t('home.tools.visit')} <ExternalLink className="size-4" aria-hidden="true" />
+                  </a>
+                </div>
+              </Card>
             ))}
-            <span className="bg-accent-500/50 size-1 shrink-0 rounded-full" aria-hidden="true" />
-            <span className="bg-accent-500 text-on-accent shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold">
-              {formatNumber(allTools.length, locale)}+
-            </span>
-          </Marquee>
+          </div>
         </div>
       </section>
 
-      <section ref={storyRef} className="border-line bg-glass-bg relative border-y">
+      <section id="metodo" ref={storyRef} className="border-line bg-glass-bg relative border-y">
         <div className="shell py-16 md:py-24">
           <PageHeader
             kicker={t('home.method.phasesLabel')}
@@ -279,16 +424,19 @@ export function HomePage() {
                     ];
                     const visible = index <= activePhase;
                     return (
-                      <motion.div
+                      <motion.button
+                        type="button"
                         key={track.id}
                         initial={false}
                         animate={{ opacity: visible ? 1 : 0.22, scale: visible ? 1 : 0.82 }}
                         transition={{ duration: reduced ? 0 : 0.45, ease: EASE_OUT_EXPO }}
                         className={`absolute z-10 ${positions[index]} border-line bg-bg flex size-14 items-center justify-center rounded-2xl border shadow-[0_8px_24px_rgb(0_0_0/0.12)] md:size-16`}
                         aria-label={tp(track.title)}
+                        aria-pressed={activePhase === index}
+                        onClick={() => setActivePhase(index)}
                       >
                         <Icon className="text-accent-500 size-5 md:size-6" aria-hidden="true" />
-                      </motion.div>
+                      </motion.button>
                     );
                   })}
                   <div className="bg-accent-500 text-on-accent absolute inset-[34%] flex flex-col items-center justify-center rounded-full text-center shadow-[0_16px_44px_rgb(0_0_0/0.25)]">
@@ -374,7 +522,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="shell py-20 md:py-28">
+      <section id="tracks" className="shell py-20 md:py-28">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-5">
           <div>
             <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">{t('nav.academia')}</p>
@@ -383,27 +531,61 @@ export function HomePage() {
             </h2>
             <p className="text-ink-soft mt-4 max-w-2xl">{t('home.tracks.desc')}</p>
           </div>
-          <LinkButton to={`/${locale}/academia`} variant="outline">
-            {t('home.tracks.viewAll')} <ArrowRight className="size-4" />
-          </LinkButton>
+          <div className="flex flex-wrap items-center gap-3">
+            <LinkButton to={`/${locale}/academia#tracks`} variant="outline">
+              {t('home.tracks.viewAll')} <ArrowRight className="size-4" />
+            </LinkButton>
+            <div className="hidden gap-2 sm:flex">
+              <button
+                type="button"
+                onClick={() => shiftCarousel(tracksRef, -1)}
+                aria-label={t('home.carousel.previous')}
+                className="border-line-strong hover:border-accent-500 grid size-10 place-items-center rounded-full border transition"
+              >
+                <ChevronLeft className="size-5" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                onClick={() => shiftCarousel(tracksRef, 1)}
+                aria-label={t('home.carousel.next')}
+                className="border-line-strong hover:border-accent-500 grid size-10 place-items-center rounded-full border transition"
+              >
+                <ChevronRight className="size-5" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
         </div>
-        <StaggerContainer className="grid gap-4 md:grid-cols-2">
-          {tracks.slice(0, 4).map((track) => (
-            <StaggerItem key={track.id}>
-              <SpotlightCard className="h-full p-6">
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="text-xl font-bold">{tp(track.title)}</h3>
-                  <Badge variant="outline">{t('home.tracks.phase', { phase: track.phase })}</Badge>
-                </div>
-                <p className="text-muted mt-3 text-sm leading-relaxed">{tp(track.desc)}</p>
-                <p className="text-accent-500 mt-5 text-xs font-semibold">
-                  {t('home.tracks.hours', { count: track.hours })} ·{' '}
-                  {t('home.tracks.topics', { count: track.topicsCount })}
-                </p>
-              </SpotlightCard>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+        <div
+          ref={tracksRef}
+          role="region"
+          aria-roledescription="carousel"
+          aria-label={t('home.tracks.title')}
+          className="touch-pan-x [scrollbar-width:thin] overflow-x-auto overscroll-x-contain pb-4"
+        >
+          <StaggerContainer className="flex snap-x snap-mandatory gap-4">
+            {tracks.slice(0, 4).map((track) => (
+              <StaggerItem key={track.id} className="w-[86%] shrink-0 snap-start sm:w-[calc(50%-0.5rem)]">
+                <SpotlightCard className="h-full p-6">
+                  <div className="flex items-start justify-between gap-4">
+                    <h3 className="text-xl font-bold">{tp(track.title)}</h3>
+                    <Badge variant="outline">{t('home.tracks.phase', { phase: track.phase })}</Badge>
+                  </div>
+                  <p className="text-muted mt-3 text-sm leading-relaxed">{tp(track.desc)}</p>
+                  <p className="text-accent-500 mt-5 text-xs font-semibold">
+                    {t('home.tracks.hours', { count: track.hours })} ·{' '}
+                    {t('home.tracks.topics', { count: track.topicsCount })}
+                  </p>
+                  <Link
+                    to={`/${locale}/academia#track-${track.slug}`}
+                    className="text-accent-500 mt-5 inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+                  >
+                    {t('home.tracks.explore')} <ArrowRight className="size-4" aria-hidden="true" />
+                  </Link>
+                </SpotlightCard>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
       </section>
 
       <section className="border-line bg-glass-bg border-y backdrop-blur-xl">
@@ -446,31 +628,63 @@ export function HomePage() {
       <section className="shell py-20 md:py-28">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-5">
           <div>
-            <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">
-              {t('home.events.title')}
-            </p>
+            <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">{t('nav.eventos')}</p>
             <h2 className="mt-3 text-3xl font-extrabold tracking-tight md:text-5xl">
-              {t('home.events.desc')}
+              {t('home.events.title')}
             </h2>
+            <p className="text-ink-soft mt-4 max-w-2xl">{t('home.events.desc')}</p>
           </div>
-          <LinkButton to={`/${locale}/eventos`} variant="outline">
-            {t('home.events.viewAll')} <ArrowRight className="size-4" />
-          </LinkButton>
+          <div className="flex flex-wrap items-center gap-3">
+            <LinkButton to={`/${locale}/eventos`} variant="outline">
+              {t('home.events.viewAll')} <ArrowRight className="size-4" />
+            </LinkButton>
+            {upcoming.length > 1 ? (
+              <div className="hidden gap-2 sm:flex">
+                <button
+                  type="button"
+                  onClick={() => shiftCarousel(eventsRef, -1)}
+                  aria-label={t('home.carousel.previous')}
+                  className="border-line-strong hover:border-accent-500 grid size-10 place-items-center rounded-full border transition"
+                >
+                  <ChevronLeft className="size-5" aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => shiftCarousel(eventsRef, 1)}
+                  aria-label={t('home.carousel.next')}
+                  className="border-line-strong hover:border-accent-500 grid size-10 place-items-center rounded-full border transition"
+                >
+                  <ChevronRight className="size-5" aria-hidden="true" />
+                </button>
+              </div>
+            ) : null}
+          </div>
         </div>
-        <StaggerContainer className="grid gap-4 md:grid-cols-3">
-          {upcoming.map((event) => (
-            <StaggerItem key={event.id}>
-              <Card className="h-full p-5 transition-all duration-500 hover:-translate-y-1">
-                <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">
-                  {formatDate(event.date, locale)}
-                </p>
-                <h3 className="mt-3 font-bold">{tp(event.title)}</h3>
-                <p className="text-muted mt-2 text-sm">{tp(event.location)}</p>
-              </Card>
-            </StaggerItem>
-          ))}
-          {upcoming.length === 0 ? <p className="text-muted">{t('home.events.empty')}</p> : null}
-        </StaggerContainer>
+        <div
+          ref={eventsRef}
+          role="region"
+          aria-roledescription="carousel"
+          aria-label={t('home.events.title')}
+          className="touch-pan-x [scrollbar-width:thin] overflow-x-auto overscroll-x-contain pb-4"
+        >
+          <StaggerContainer className="flex snap-x snap-mandatory gap-4">
+            {upcoming.map((event) => (
+              <StaggerItem
+                key={event.id}
+                className="w-[86%] shrink-0 snap-start sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)]"
+              >
+                <Card className="h-full p-5 transition-all duration-500 hover:-translate-y-1">
+                  <p className="text-accent-500 text-xs font-bold tracking-widest uppercase">
+                    {formatDate(event.date, locale)}
+                  </p>
+                  <h3 className="mt-3 font-bold">{tp(event.title)}</h3>
+                  <p className="text-muted mt-2 text-sm">{tp(event.location)}</p>
+                </Card>
+              </StaggerItem>
+            ))}
+            {upcoming.length === 0 ? <p className="text-muted">{t('home.events.empty')}</p> : null}
+          </StaggerContainer>
+        </div>
       </section>
 
       <section className="border-line bg-glass-bg border-y backdrop-blur-xl">

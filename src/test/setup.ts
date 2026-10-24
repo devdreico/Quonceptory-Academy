@@ -28,12 +28,19 @@ class ResizeObserverStub {
 }
 window.ResizeObserver = ResizeObserverStub;
 
-window.IntersectionObserver = vi.fn(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-  takeRecords: vi.fn(),
-  root: null,
-  rootMargin: '',
-  thresholds: [],
-})) as unknown as typeof IntersectionObserver;
+class IntersectionObserverStub implements IntersectionObserver {
+  readonly root = null;
+  readonly rootMargin = '';
+  readonly thresholds: readonly number[] = [];
+
+  constructor(_callback: IntersectionObserverCallback) {}
+
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+  takeRecords(): IntersectionObserverEntry[] {
+    return [];
+  }
+}
+
+window.IntersectionObserver = IntersectionObserverStub;

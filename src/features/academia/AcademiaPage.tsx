@@ -26,14 +26,14 @@ export function AcademiaPage() {
           {t('academia.cta')} <ArrowRight className="size-4" />
         </LinkButton>
       </PageHeader>
-      <section className="shell py-16 md:py-24">
+      <section id="tracks" className="shell py-16 md:py-24">
         <div className="mb-8">
           <h2 className="text-3xl font-extrabold tracking-tight">{t('academia.tracks.title')}</h2>
           <p className="text-ink-soft mt-3 max-w-2xl">{t('academia.tracks.desc')}</p>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           {tracks.map((track) => (
-            <Card key={track.id} className="p-6">
+            <Card id={`track-${track.slug}`} key={track.id} className="scroll-mt-24 p-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <Badge variant="accent">{t('academia.phase', { n: track.phase })}</Badge>
                 <span className="text-muted flex items-center gap-1.5 text-xs">
@@ -60,7 +60,7 @@ export function AcademiaPage() {
           ))}
         </div>
       </section>
-      <section className="border-line bg-surface/50 border-y">
+      <section id="programs" className="border-line bg-surface/50 scroll-mt-20 border-y">
         <div className="shell py-16 md:py-24">
           <h2 className="text-3xl font-extrabold tracking-tight">{t('academia.programs.title')}</h2>
           <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
